@@ -175,10 +175,9 @@ void ADC12_Initial(void)
   //DAC12_1CTL = DAC12IR + DAC12AMP_5 + DAC12ENC;   // Internal ref gain 1   
   //DAC12_1DAT = 0x0fff;  
   
-  ADC12CTL0 =  REFON + REF2_5V;                    // Internal 2.5V ref on     //ADC12CTL0 =  REFON;                    // Internal 2.5V ref on    
-  DAC12_1CTL = DAC12IR + DAC12AMP_2 + DAC12ENC ;   // Internal ref gain 1   
-  DAC12_0CTL = DAC12IR + DAC12AMP_2 + DAC12ENC ; 
- 
+ADC12CTL0  = REFON + REF2_5V;                          // VREF+ = 2.5V
+DAC12_0CTL = DAC12AMP2 + DAC12AMP_2 + DAC12ENC;        // 不要加 DAC12IR
+DAC12_1CTL = DAC12AMP2 + DAC12AMP_2 + DAC12ENC;
   
   //ADC12CTL0 =  REFON;                    // Internal 2.5V ref on    
   //DAC12_1CTL = DAC12IR + DAC12AMP_2 + DAC12ENC ;   // Internal ref gain 1   
