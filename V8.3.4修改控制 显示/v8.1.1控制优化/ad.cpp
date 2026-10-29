@@ -102,10 +102,10 @@ void Confige_1115(unsigned char channel )
     unsigned int i=0;
     switch(channel)
     {
-    case 0:  Initdata[2] = 0xc4; break;
-    case 1:  Initdata[2] = 0xd4; break;
-    case 2:  Initdata[2] = 0xe4; break;
-    case 3:  Initdata[2] = 0xf4; break; 
+    case 0:  Initdata[2] = 0xc2; break;   // PGA ±4.096V (原 ±2.048V, 适配新 0-2.5V 传感器)
+    case 1:  Initdata[2] = 0xd2; break;
+    case 2:  Initdata[2] = 0xe2; break;
+    case 3:  Initdata[2] = 0xf2; break; 
     }
     Initdata[0] =0x90;       // 启动配置命令
     Initdata[1] =0x01;       // 指向配置寄存器

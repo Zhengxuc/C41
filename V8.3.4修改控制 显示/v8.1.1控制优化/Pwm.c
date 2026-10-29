@@ -66,11 +66,8 @@ float K_With_Temperature(int temp)
 //DA输出 1200 是1.5v 输出2340是2.88   2925是3.588
 
 
-
-
-void OutPut_Negetive(unsigned int m) 
+void OutPut_Negetive(unsigned int m)//中间层
 {    
-  
 //      if(AD.Temperature<0)
 //      m= m * K_With_Temperature(AD.Temperature);
 //      
@@ -104,8 +101,11 @@ void OutPut_Negetive(unsigned int m)
 //        
 //        else if(AD.Temperature > 50 && AD.Temperature < 350  )   //不动
 //        {
-            DAC12_0DAT= 1200 - m*1.2;
-            DAC12_1DAT = 0;    //改为反向输出
+//            DAC12_0DAT= 800 - m*0.7;//2026 3 30
+            DAC12_0DAT=   950 - m ;
+//            DAC12_1DAT = 0;    //改为反向输出
+            DAC12_1DAT = 1900 ;    //改为高电平正向
+            
 //        }
 //        
 //        else if(AD.Temperature >= 350  )
@@ -147,8 +147,9 @@ void OutPut_Negetive(unsigned int m)
 
       else if(1 == VAL.V_p8_2_POS) //故障闭锁
       {
-        DAC12_1DAT = m*1.25;  
-        DAC12_0DAT = 0;
+       
+        DAC12_0DAT =  m ;
+        DAC12_1DAT = 1800;  
         AD.IP_Current_Out = -((m*1.25)/1666.6);
         AD.IP_Current_Percent = -m*0.1;    
       }
@@ -188,17 +189,18 @@ void OutPut_Positive( unsigned int n)
 //        
 //        else if(AD.Temperature <=350 &&  AD.Temperature  > 50  )     //低温区不变
 //         { 
-            DAC12_0DAT= 1200  +  n*1.2;   //   1200 +  1800  = 3000   =  3v
-            DAC12_1DAT = 0;
+//            DAC12_0DAT= 800  +  n*0.7;   //   1200 +  1800  = 3000   =  3v //2026 3 30
+//            DAC12_1DAT = 0;
             
 //         }
 //        
 //        
 //        else if(AD.Temperature >350 )
 //         {
-//            DAC12_0DAT= (1200     +   n*1.2) +   (int) ( 13 *( (float) ((  AD.Temperature - 350  ) / 10 ))  ) ;          
+//            DAC12_0DAT= (1200     +   n*1.2) +   (int) ( 13 *( (float) ((  AD.Temperature - 350  ) / 10 ))  ) ;     
+            DAC12_0DAT= 950  +  n ; 
 //            DAC12_1DAT = 0;           
-//           
+           DAC12_1DAT = 1900;  
 //         }
 
          
@@ -211,7 +213,7 @@ void OutPut_Positive( unsigned int n)
       
       else if(1 == VAL.V_p8_2_POS) //故障闭锁
       {
-       DAC12_0DAT = n*1.25;  
+       DAC12_0DAT = n;  
        DAC12_1DAT = 0;
        AD.IP_Current_Out = (n*1.25)/1666.6;
        AD.IP_Current_Percent = n*0.1;  

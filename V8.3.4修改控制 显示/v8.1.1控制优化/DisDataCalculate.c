@@ -4,7 +4,7 @@ int Cur_ValvePointDIS = 0;
 void LineCalculate(void)
 {
   g_dangel_now = AD.CurrentBack;
-  g_dangel_now = (double)(g_dangel_now - 2048)/4096*3.141592653; 
+  g_dangel_now = (double)(g_dangel_now - 2090)/4096*3.141592653; 
   if(VAL.V_p1_1_RCR == V_LINE )
   {
     g_dsinAngel_now = sin(g_dangel_now);  
@@ -348,7 +348,7 @@ void Display_Data_Calculate(void)
                         //    DIS.Small_Dis[1] = 38;
                         //    DIS.Small_Dis[2] = 38;                       
                         //}
-                        //Y:20230417 ????��??????
+                        //Y:20230417 ????Ąė??????
                         g_PIDServiceData.SetPointDis -=5;
                         if (g_PIDServiceData.SetPointDis / 1000)
                         {
@@ -369,7 +369,7 @@ void Display_Data_Calculate(void)
                             DIS.Small_Dis[2] = 38;
                         }
                         g_PIDServiceData.SetPointDis +=5;
-                        //��???????????
+                        //Ąė???????????
                                           
                       }  break;
         case MAN    : {
@@ -405,15 +405,17 @@ void Display_Data_Calculate(void)
                               }
                                //------------------------------------------------
                               */
-                                if(OP.Meterage_L > 2048)  
+                                // 角度显示页：以 CurrentBack 零点 2090 为中位，满量程跨度 ≈2090（对应 90°）
+                                // 原硬编码 2048 为 ADS1115 2.048V 量程遗留，新板 PGA ±4.096V 且传感器 0°→1.25V→CurrentBack=2090
+                                if(OP.Meterage_L > 2090)  
                                 {  
                                     DIS.SignL &= ~MODE_;
-                                    DIS.DisTemp = (float)(OP.Meterage_L - 2048)/2048*900;
+                                    DIS.DisTemp = (float)(OP.Meterage_L - 2090)/2090*900;
                                 }
                                 else
                                 {
                                     DIS.SignL |= MODE_;
-                                    DIS.DisTemp = (float)(2048 - OP.Meterage_L)/2048*900;
+                                    DIS.DisTemp = (float)(2090 - OP.Meterage_L)/2090*900;
                                 }                             
                               
 

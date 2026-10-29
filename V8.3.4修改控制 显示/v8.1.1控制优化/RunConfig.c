@@ -62,7 +62,7 @@ unsigned char stp_23_flag1=0;//排气完成标志
 void UpCalculate(void)
 { 
    g_dangel_up = OP.Up_Limited;
-   g_dangel_up = (double)(g_dangel_up - 2048)/4096*3.141592653;         
+   g_dangel_up = (double)(g_dangel_up - 2090)/4096*3.141592653;         
   
   if(VAL.V_p1_1_RCR == V_LINE )
   {
@@ -76,7 +76,7 @@ void UpCalculate(void)
 void DownCalculate(void)
 {
    g_dangel_down = OP.Down_Limited;//原始值
-   g_dangel_down = (double)(g_dangel_down - 2048)/4096*3.141592653; //变成弧度值
+   g_dangel_down = (double)(g_dangel_down - 2090)/4096*3.141592653; //变成弧度值
  
   if(VAL.V_p1_1_RCR == V_LINE )
   {

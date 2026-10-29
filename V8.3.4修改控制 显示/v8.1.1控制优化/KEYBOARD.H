@@ -57,6 +57,18 @@ typedef  union
 //------------------------------------------------------------------------------
 extern void Keyboard_Initial(void);       // 初始化程序
 //------------------------------------------------------------------------------
+// 新板按键丝印顺序从左到右变为 4 3 2 1，需把 P2 端口高 4 位做镜像翻转后再参与逻辑
+// 把 [BIT7 BIT6 BIT5 BIT4] 变成 [BIT4 BIT5 BIT6 BIT7]
+static inline unsigned char SwapKeyHi4(unsigned char v)
+{
+    unsigned char hi = v & 0xF0;
+    unsigned char lo = v & 0x0F;
+    return (unsigned char)(lo | (((hi & 0x80) >> 3)
+                               | ((hi & 0x40) >> 1)
+                               | ((hi & 0x20) << 1)
+                               | ((hi & 0x10) << 3)));
+}
+//------------------------------------------------------------------------------
 #endif
 
 
