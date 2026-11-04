@@ -11,30 +11,30 @@
 //******************************************************************************
 
 //------------------------------------------------------------------------------
-// ½Ó¿Ú¶¨Òå£º   AD421      LATCH    CLOCK    DATA    GND
+// æ¥å£å®šä¹‰ï¼š   AD421      LATCH    CLOCK    DATA    GND
 //                         P1.5     P1.6     P1.7    GND
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-// ½Ó¿Ú¶¨Òå£º  Ht2015      ORXD     OCD    ITXD   INRTS   +3V   GND
+// æ¥å£å®šä¹‰ï¼š  Ht2015      ORXD     OCD    ITXD   INRTS   +3V   GND
 //                          RXD    P5.5    TXD    P1.1     
 //------------------------------------------------------------------------------
 
 //---------------------------------------------
-//   ²ãºÅ    ²ãÃû      OSI²ã´Î       HART²ã´Î 
-//    7    Ó¦ÓÃ²ã    ¸ñÊ½»¯Êı¾İ      HARTÃüÁî 
-//    6    ±íÊ¾²ã    ×ª»»Êı¾İ ÎŞ 
-//    5    »á»°²ã    ¿ØÖÆ»á»° ÎŞ 
-//    4    ´«Êä²ã    È·±£ĞÅÏ¢ÍêÕû ÎŞ 
-//    3    ÍøÂç²ã    Â·ÓÉ´«ËÍ ÎŞ 
-//    2  Êı¾İÁ´Â·²ã  ²î´í´¦Àí Ğ­Òé¹æÔò 
-//    1    ÎïÀí²ã    Á¬½ÓÉè±¸ BELL 202 
+//   å±‚å·    å±‚å      OSIå±‚æ¬¡       HARTå±‚æ¬¡ 
+//    7    åº”ç”¨å±‚    æ ¼å¼åŒ–æ•°æ®      HARTå‘½ä»¤ 
+//    6    è¡¨ç¤ºå±‚    è½¬æ¢æ•°æ® æ—  
+//    5    ä¼šè¯å±‚    æ§åˆ¶ä¼šè¯ æ—  
+//    4    ä¼ è¾“å±‚    ç¡®ä¿ä¿¡æ¯å®Œæ•´ æ—  
+//    3    ç½‘ç»œå±‚    è·¯ç”±ä¼ é€ æ—  
+//    2  æ•°æ®é“¾è·¯å±‚  å·®é”™å¤„ç† åè®®è§„åˆ™ 
+//    1    ç‰©ç†å±‚    è¿æ¥è®¾å¤‡ BELL 202 
 //----------------------------------------------
-// HARTĞ­Òé°üÀ¨ÎïÀí²ã£¬Êı¾İÁ´Â·²ãºÍÓ¦ÓÃ²ã£¬¼°DLLÓïÑÔÕâËÄ²¿·Ö¡£
+// HARTåè®®åŒ…æ‹¬ç‰©ç†å±‚ï¼Œæ•°æ®é“¾è·¯å±‚å’Œåº”ç”¨å±‚ï¼ŒåŠDLLè¯­è¨€è¿™å››éƒ¨åˆ†ã€‚
 //-----------------------------------------------------------
 
 //------------------------------------------------------------------------------
-//  HARTĞ­ÒéÊı¾İÁ´Â·²ã¹æ·¶    ´ÓÉè±¸      burstÄ£Ê½Éè±¸     Ö÷Éè±¸
-//  Ö÷-´ÓĞÍÖ¡£¬´Ó-Ö÷ĞÍÖ¡   ³¤ĞÍÖ¡£¬¶ÌĞÍÖ¡  
+//  HARTåè®®æ•°æ®é“¾è·¯å±‚è§„èŒƒ    ä»è®¾å¤‡      burstæ¨¡å¼è®¾å¤‡     ä¸»è®¾å¤‡
+//  ä¸»-ä»å‹å¸§ï¼Œä»-ä¸»å‹å¸§   é•¿å‹å¸§ï¼ŒçŸ­å‹å¸§  
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
@@ -46,42 +46,42 @@
 /*
     The preamble, of between 5 and 20 bytes of hex FF (all 1"s), helps the receiver
         to synchronise to the character stream.
-¡¡¡¡
-¡¡¡¡The start character may have one of several values, indicating the type of message:
+ã€€ã€€
+ã€€ã€€The start character may have one of several values, indicating the type of message:
         master to slave, slave to master, or burst message from slave; also the address format: 
         short frame or long frame.
-¡¡¡¡
-¡¡¡¡The address field includes both the master address (a single bit: 1 for a primary master, 
+ã€€ã€€
+ã€€ã€€The address field includes both the master address (a single bit: 1 for a primary master, 
         0 for a secondary master) and the slave address. In the short frame format,
         the slave address is 4 bits containing the "polling address" (0 to 15). 
         In the long frame format, it is 38 bits containing a "unique identifier" for that particular device.
         (One bit is also used to indicate if a slave is in burst mode.)
-¡¡¡¡
-¡¡¡¡The command byte contains the HART command for this message. Universal commands 
+ã€€ã€€
+ã€€ã€€The command byte contains the HART command for this message. Universal commands 
         are in the range 0 to 30; common practice commands are in the range 32 to 126;
         device-specific commands are in the range 128 to 253.
-¡¡¡¡
-¡¡¡¡The byte count byte contains the number of bytes to follow in the status and data bytes.
+ã€€ã€€
+ã€€ã€€The byte count byte contains the number of bytes to follow in the status and data bytes.
         The receiver uses this to know when the message is complete. 
         (There is no special "end of message" character.)
-¡¡¡¡
-¡¡¡¡The status field (also known as the "response code") is two bytes, only present in the
+ã€€ã€€
+ã€€ã€€The status field (also known as the "response code") is two bytes, only present in the
         response message from a slave. It contains information about communication errors in
         the outgoing message, the status of the received command, and the status of the device itself.
-¡¡¡¡
-¡¡¡¡The data field may or may not be present, depending on the particular command.
+ã€€ã€€
+ã€€ã€€The data field may or may not be present, depending on the particular command.
         A maximum length of 25 bytes is recommended, to keep the overall message duration reasonable.
         (But some devices have device-specific commands using longer data fields.)
         See also the HART data field.
-¡¡¡¡
-¡¡¡¡Finally, the checksum byte contains an "exclusive-or" or "longitudinal parity" of all previous 
+ã€€ã€€
+ã€€ã€€Finally, the checksum byte contains an "exclusive-or" or "longitudinal parity" of all previous 
         bytes (from the start character onwards). Together with the parity bit attached to each byte, 
         this is used to detect communication errors.
 //----------------------------------------------------------------------------------------------------
 //   standard uart 
 */
 //------------------------------------------------------------------------------
-// Õë¶Ô Ğ¾Æ¬ HT2015 Òı½Å¶¨Òå
+// é’ˆå¯¹ èŠ¯ç‰‡ HT2015 å¼•è„šå®šä¹‰
 //
 
 //#ifndef __Hart_H__
@@ -107,105 +107,105 @@ extern void com_send(unsigned char *send, unsigned char send_bytes);
 # define  OCDIE   P1IE
 # define  INRTS   BIT1
 //# define  OCD     
-//----------------------------------------------------ÏÈµ¼×Ö·û
+//----------------------------------------------------å…ˆå¯¼å­—ç¬¦
 # define PREAMBLES           0xFF
-//----------------------------------------------------¶¨½ç·û
+//----------------------------------------------------å®šç•Œç¬¦
 # define LONG_BURST_FRAME    0X81     //  1000  0  001
 # define LONG_STX_FRAME      0X82     //  1000  0  001
 # define LONG_ACK_FRAME      0X86     //  1000  0  001
 # define SHORT_BURST_FRAME   0X01     //  1000  0  001
 # define SHORT_STX_FRAME     0X02     //  1000  0  001
 # define SHORT_ACK_FRAME     0X06     //  1000  0  001
-//----------------------------------------------------±àÖ·
+//----------------------------------------------------ç¼–å€
 # define ADD_MASTER_UNBURST  0X80    
 # define ADD_SLAVE_UNBURST   0X00 
 # define ADD_MASTER_BURST    0XC0        
 # define ADD_SLAVE_BURST     0X40 
 //******************************************************************************
-//----------------------------------------------------ÃüÁîÓò     ( Í¨ÓÃÃüÁîÓò)
-# define READ_ID       0   // ¶Á±êÊ¶Âë  
-# define READ_PV       1   // ¶ÁÖ÷±äÁ¿£¨PV£©
-# define READ_P_A      2   // ¶ÁÖ÷±äÁ¿µçÁ÷ÖµºÍ°Ù·Ö±È
-# define READ_MP_A     3   // ¶Á¶¯Ì¬±äÁ¿ºÍÖ÷±äÁ¿µçÁ÷
-# define WRITE_POLL    6   // Ğ´POLLINGµØÖ·
-# define READ_IN_TAG   11  // ÓÃÉè±¸µÄTag¶ÁÉè±¸µÄ±êÊ¶
-# define READ_MESSAGE  12  // ¶ÁÏûÏ¢£¨Message£©
-# define READ_TAG_T    13  // ¶Á±êÇ©Tag£¬ÃèÊö·ûDescriptionºÍÈÕÆÚDate
-# define READ_IN_S     14  // ¶ÁÖ÷±äÁ¿´«¸ĞÆ÷ĞÅÏ¢
-# define READ_IN_O     15  // ¶ÁÖ÷±äÁ¿Êä³öĞÅÏ¢
-# define READ_F_ID     16  // ¶Á×îÖÕ×°ÅäºÅ
-# define WRITE_MESSAGE 17  // Ğ´ÏûÏ¢
-# define WRITE_TAG     18  // Ğ´±êÇ©¡¢ÃèÊö·ûºÍÈÕÆÚ
-# define WRITE_F_ID    19  // Ğ´×îºó×°ÅäºÅ
-//----------------------------------------------------ÃüÁîÓò     ( Ò»°ãÃüÁîÓò)
-# define READ_B_PV     33  // ¶Á±äËÍÆ÷±äÁ¿
-# define WRITE_M_R     34  // Ğ´Ö÷±äÁ¿×èÄáÖµ
-# define WRITE_M_M     35  // Ğ´Ö÷±äÁ¿Á¿³ÌÖµ 
-# define SET_M_TOP     36  // ÉèÖÃÖ÷±äÁ¿Á¿³ÌÉÏÏŞ
-# define SET_M_LOW     37  // ÉèÖÃÖ÷±äÁ¿Á¿³ÌÏÂÏŞ
-# define RESET_FLAG    38  // ¸´Î»×éÌ¬¸Ä±ä±êÖ¾
-# define SET_EE        39  // EE¿ØÖÆ
+//----------------------------------------------------å‘½ä»¤åŸŸ     ( é€šç”¨å‘½ä»¤åŸŸ)
+# define READ_ID       0   // è¯»æ ‡è¯†ç   
+# define READ_PV       1   // è¯»ä¸»å˜é‡ï¼ˆPVï¼‰
+# define READ_P_A      2   // è¯»ä¸»å˜é‡ç”µæµå€¼å’Œç™¾åˆ†æ¯”
+# define READ_MP_A     3   // è¯»åŠ¨æ€å˜é‡å’Œä¸»å˜é‡ç”µæµ
+# define WRITE_POLL    6   // å†™POLLINGåœ°å€
+# define READ_IN_TAG   11  // ç”¨è®¾å¤‡çš„Tagè¯»è®¾å¤‡çš„æ ‡è¯†
+# define READ_MESSAGE  12  // è¯»æ¶ˆæ¯ï¼ˆMessageï¼‰
+# define READ_TAG_T    13  // è¯»æ ‡ç­¾Tagï¼Œæè¿°ç¬¦Descriptionå’Œæ—¥æœŸDate
+# define READ_IN_S     14  // è¯»ä¸»å˜é‡ä¼ æ„Ÿå™¨ä¿¡æ¯
+# define READ_IN_O     15  // è¯»ä¸»å˜é‡è¾“å‡ºä¿¡æ¯
+# define READ_F_ID     16  // è¯»æœ€ç»ˆè£…é…å·
+# define WRITE_MESSAGE 17  // å†™æ¶ˆæ¯
+# define WRITE_TAG     18  // å†™æ ‡ç­¾ã€æè¿°ç¬¦å’Œæ—¥æœŸ
+# define WRITE_F_ID    19  // å†™æœ€åè£…é…å·
+//----------------------------------------------------å‘½ä»¤åŸŸ     ( ä¸€èˆ¬å‘½ä»¤åŸŸ)
+# define READ_B_PV     33  // è¯»å˜é€å™¨å˜é‡
+# define WRITE_M_R     34  // å†™ä¸»å˜é‡é˜»å°¼å€¼
+# define WRITE_M_M     35  // å†™ä¸»å˜é‡é‡ç¨‹å€¼ 
+# define SET_M_TOP     36  // è®¾ç½®ä¸»å˜é‡é‡ç¨‹ä¸Šé™
+# define SET_M_LOW     37  // è®¾ç½®ä¸»å˜é‡é‡ç¨‹ä¸‹é™
+# define RESET_FLAG    38  // å¤ä½ç»„æ€æ”¹å˜æ ‡å¿—
+# define SET_EE        39  // EEæ§åˆ¶
 
-# define MOD_M_A       40  // ½øÈë/ÍË³ö¹Ì¶¨Ö÷±äÁ¿µçÁ÷Ä£Ê½
+# define MOD_M_A       40  // è¿›å…¥/é€€å‡ºå›ºå®šä¸»å˜é‡ç”µæµæ¨¡å¼
 
-# define CHECK_SELF    41  // Ö´ĞĞ±äËÍÆ÷×Ô¼ì
+# define CHECK_SELF    41  // æ‰§è¡Œå˜é€å™¨è‡ªæ£€
 
-# define RESET_IN      42  // Ö´ĞĞÉè±¸¸´Î»  
-# define SET_M_ZERO    43  // ÉèÖÃÖ÷±äÁ¿Áãµã
-# define WRITE_M_D     44  // Ğ´Ö÷±äÁ¿µ¥Î»
-# define MODIFY_M_DAC  45  // µ÷ÕûÖ÷±äÁ¿µçÁ÷DACÁãµã
-# define MODIFY_M_INC  46  // µ÷ÕûÖ÷±äÁ¿µçÁ÷DACÔöÒæ
-# define WRITE_M_FUN   47  // Ğ´Ö÷±äÁ¿´«µİ¹¦ÄÜ
-# define READ_A_IN     48  // ¶Á¸½¼ÓµÄ±äËÍÆ÷×´Ì¬
-# define WRITE_M_C_ID  49  // Ğ´Ö÷±äÁ¿´«¸ĞÆ÷ĞòÁĞºÅ
-# define READ_D_CONFIG 50  // ¶Á¶¯Ì¬±äÁ¿ÅäÖÃ
-# define WRITE_D_CONFIG 51 // Ğ´¶¯Ì¬±äÁ¿ÅäÖÃ
-# define SET_IN_ZERO    52 // ÉèÖÃ±äËÍÆ÷±äÁ¿Áãµã
-# define WRITE_IN_D     53 // Ğ´±äËÍÆ÷±äÁ¿µ¥Î»
-# define READ_IN_INFOR  54 // ¶Á±äËÍÆ÷±äÁ¿ĞÅÏ¢
-# define WRITE_IN_Z     55 // Ğ´±äËÍÆ÷±äÁ¿×èÄáÖµ
-# define WRITE_IN_ID    56 // Ğ´±äËÍÆ÷±äÁ¿´«¸ĞÆ÷ĞòÁĞºÅ
-# define READ_UNIT_TAG  57 // ¶ÁUNITÉè±¸±êÇ©¡¢ÃèÊö¡¢ÈÕÆÚ
-# define WRITE_IN_TAG   58 // Ğ´UNITÉè±¸±êÇ©¡¢ÃèÊö¡¢ÈÕÆÚ
-# define WRITE_Q_NUM    59 // Ğ´ÏìÓ¦Ç°µ¼·ûµÄ¸öÊı
-# define READ_A0_P      60 // ¶ÁÄ£ÄâÊä³öAOºÍÁ¿³ÌµÄ°Ù·Ö±È
-# define READ_D_PV      61 // ¶Á¶¯Ì¬±äÁ¿ºÍPVÄ£ÄâÊä³ö
-# define READ_AS        62 // ¶Á¶à¸öÄ£ÄâÊä³ö
-# define READ_A_INFOR   63 // ¶ÁÄ£ÄâÊä³öĞÅÏ¢
-# define WRITE_AS_Z     64 // Ğ´Ä£ÄâÊä³ö¸½¼Ó×èÄáÖµ
-# define WRITE_AS_M     65 // Ğ´Ä£ÄâÊä³öÁ¿³ÌÖµ
-# define SET_IO_AS      66 // ½øÈë/ÍË³ö¹Ì¶¨Ä£ÄâÊä³öÄ£Ê½
-# define MODIFY_ZERO_AS 67 // ĞŞÕıÄ£ÄâÊä³öÁãµã
+# define RESET_IN      42  // æ‰§è¡Œè®¾å¤‡å¤ä½  
+# define SET_M_ZERO    43  // è®¾ç½®ä¸»å˜é‡é›¶ç‚¹
+# define WRITE_M_D     44  // å†™ä¸»å˜é‡å•ä½
+# define MODIFY_M_DAC  45  // è°ƒæ•´ä¸»å˜é‡ç”µæµDACé›¶ç‚¹
+# define MODIFY_M_INC  46  // è°ƒæ•´ä¸»å˜é‡ç”µæµDACå¢ç›Š
+# define WRITE_M_FUN   47  // å†™ä¸»å˜é‡ä¼ é€’åŠŸèƒ½
+# define READ_A_IN     48  // è¯»é™„åŠ çš„å˜é€å™¨çŠ¶æ€
+# define WRITE_M_C_ID  49  // å†™ä¸»å˜é‡ä¼ æ„Ÿå™¨åºåˆ—å·
+# define READ_D_CONFIG 50  // è¯»åŠ¨æ€å˜é‡é…ç½®
+# define WRITE_D_CONFIG 51 // å†™åŠ¨æ€å˜é‡é…ç½®
+# define SET_IN_ZERO    52 // è®¾ç½®å˜é€å™¨å˜é‡é›¶ç‚¹
+# define WRITE_IN_D     53 // å†™å˜é€å™¨å˜é‡å•ä½
+# define READ_IN_INFOR  54 // è¯»å˜é€å™¨å˜é‡ä¿¡æ¯
+# define WRITE_IN_Z     55 // å†™å˜é€å™¨å˜é‡é˜»å°¼å€¼
+# define WRITE_IN_ID    56 // å†™å˜é€å™¨å˜é‡ä¼ æ„Ÿå™¨åºåˆ—å·
+# define READ_UNIT_TAG  57 // è¯»UNITè®¾å¤‡æ ‡ç­¾ã€æè¿°ã€æ—¥æœŸ
+# define WRITE_IN_TAG   58 // å†™UNITè®¾å¤‡æ ‡ç­¾ã€æè¿°ã€æ—¥æœŸ
+# define WRITE_Q_NUM    59 // å†™å“åº”å‰å¯¼ç¬¦çš„ä¸ªæ•°
+# define READ_A0_P      60 // è¯»æ¨¡æ‹Ÿè¾“å‡ºAOå’Œé‡ç¨‹çš„ç™¾åˆ†æ¯”
+# define READ_D_PV      61 // è¯»åŠ¨æ€å˜é‡å’ŒPVæ¨¡æ‹Ÿè¾“å‡º
+# define READ_AS        62 // è¯»å¤šä¸ªæ¨¡æ‹Ÿè¾“å‡º
+# define READ_A_INFOR   63 // è¯»æ¨¡æ‹Ÿè¾“å‡ºä¿¡æ¯
+# define WRITE_AS_Z     64 // å†™æ¨¡æ‹Ÿè¾“å‡ºé™„åŠ é˜»å°¼å€¼
+# define WRITE_AS_M     65 // å†™æ¨¡æ‹Ÿè¾“å‡ºé‡ç¨‹å€¼
+# define SET_IO_AS      66 // è¿›å…¥/é€€å‡ºå›ºå®šæ¨¡æ‹Ÿè¾“å‡ºæ¨¡å¼
+# define MODIFY_ZERO_AS 67 // ä¿®æ­£æ¨¡æ‹Ÿè¾“å‡ºé›¶ç‚¹
 
-# define MODIFY_ZY_AS   68 // ĞŞÕıÄ£ÄâÊä³öÔöÒæ
-# define WRITE_TRAN     69 // Ğ´Ä£ÄâÊä³öTransfer¹¦ÄÜ
-# define READ_AD_T      70 // ¶ÁÄ£ÄâÊä³ö¶ËµãÖµ
-# define WRITE_BURST    107 // Ğ´Burst±äËÍÆ÷±äÁ¿
-# define WRITE_BURST_ID 108 // Ğ´BurstÄ£Ê½ÃüÁîºÅ
-# define MOD_BURST      109 // BurstÄ£Ê½¿ØÖÆ
-# define READ_ALL       110 // ¶ÁËùÓĞ¶¯Ì¬±äÁ¿
-# define CON_TRAN       111 // Transfer·şÎñ¿ØÖÆ 
+# define MODIFY_ZY_AS   68 // ä¿®æ­£æ¨¡æ‹Ÿè¾“å‡ºå¢ç›Š
+# define WRITE_TRAN     69 // å†™æ¨¡æ‹Ÿè¾“å‡ºTransferåŠŸèƒ½
+# define READ_AD_T      70 // è¯»æ¨¡æ‹Ÿè¾“å‡ºç«¯ç‚¹å€¼
+# define WRITE_BURST    107 // å†™Burstå˜é€å™¨å˜é‡
+# define WRITE_BURST_ID 108 // å†™Burstæ¨¡å¼å‘½ä»¤å·
+# define MOD_BURST      109 // Burstæ¨¡å¼æ§åˆ¶
+# define READ_ALL       110 // è¯»æ‰€æœ‰åŠ¨æ€å˜é‡
+# define CON_TRAN       111 // TransferæœåŠ¡æ§åˆ¶ 
 
 # define  resp_num_0   22
 # define  resp_num_1    5
-//---------------------------------------------------ÌØÊâÃüÁî
+//---------------------------------------------------ç‰¹æ®Šå‘½ä»¤
 //   KONG
 //------------------------------------------------------------------------------
 
 typedef struct HartFrame
 {
-    unsigned char preambles[7];  // Æô¶¯Òıµ¼   
-    unsigned char delimiter;  // ¶¨½ç·û
+    unsigned char preambles[7];  // å¯åŠ¨å¼•å¯¼   
+    unsigned char delimiter;  // å®šç•Œç¬¦
     union
     {
         unsigned char ShortAddr;
         unsigned char LongAddr[5];
-    }Address;                 //  µØÖ·
-    unsigned char command;    //  ÃüÁîÓò
-    unsigned char counter;    // Êı¾İ×Ö½Ú¼ÇÊıÓò
-    unsigned char data[24];   // Êı¾İÓò
-    unsigned char check;      // ¾¶ÏòĞ£Ñé  ´¹Ö±Ğ£Ñé
-    unsigned char respond[2]; // ÏìÓ¦Âë×Ö¶Î  Ö÷³¤Ö¡ÖĞ
+    }Address;                 //  åœ°å€
+    unsigned char command;    //  å‘½ä»¤åŸŸ
+    unsigned char counter;    // æ•°æ®å­—èŠ‚è®°æ•°åŸŸ
+    unsigned char data[24];   // æ•°æ®åŸŸ
+    unsigned char check;      // å¾„å‘æ ¡éªŒ  å‚ç›´æ ¡éªŒ
+    unsigned char respond[2]; // å“åº”ç å­—æ®µ  ä¸»é•¿å¸§ä¸­
 }HARTframe;
 
 
@@ -225,7 +225,7 @@ typedef union
 
 void HT2015_intitial(void)
 {
-    OCDSEL &=~(OCD_N);   // function of pin£¨IO£©
+    OCDSEL &=~(OCD_N);   // function of pinï¼ˆIOï¼‰
     OCDDIR &=~(OCD_N);   // derection
     OCDIES &=~(OCD_N);   // raising edge intterupt
     OCDIFG &=~(OCD_N);   // clear the flag of intterupt                                                                  
@@ -245,10 +245,10 @@ void HT2015_intitial(void)
 
 void  datum_send(void)
 {
-   //   Transfer.request(address,sequence no,[data])£º//±¾Ô­ÓïÓÉÖ÷Éè±¸HARTĞ­ÒéÓÃ»§Ê¹ÓÃÏò¸ø¶¨µØÖ·ÉÏµÄ´ÓÉè±¸ÊµÌåÇëÇó´«ÊäĞÅÏ¢¡£
-   //   Transfer.indicate(address,sequence no,[data])£º// ±¾Ô­ÓïÓÉÊı¾İÁ´Â·²ã¼¤·¢£¬Í¨Öª´ÓÉè±¸HARTĞ­ÒéÓÃ»§´Ó¶ÔµÈĞ­ÒéÊµÌåÖĞÊÕµ½ÁËÒ»ÌõºÏ·¨µÄ´«ËÍÏûÏ¢¡£ 
-   //   Transfer.response(status,sequence,[data])£º// ±¾Ô­ÓïÓÉ´ÓÉè±¸ÓÃ»§Ö´ĞĞ£¬ÏìÓ¦½øÈëµÄtransfer.indicate¡£
-   //   Transfer.confirm(local status,response code,sequence no,[data])£º// ±¾Ô­ÓïÏòÖ÷Éè±¸Ğ­ÒéÓÃ»§·µ»ØÏÈÇ°µÄtransfer.requestµÄÖ´ĞĞ½á¹û¡£
+   //   Transfer.request(address,sequence no,[data])ï¼š//æœ¬åŸè¯­ç”±ä¸»è®¾å¤‡HARTåè®®ç”¨æˆ·ä½¿ç”¨å‘ç»™å®šåœ°å€ä¸Šçš„ä»è®¾å¤‡å®ä½“è¯·æ±‚ä¼ è¾“ä¿¡æ¯ã€‚
+   //   Transfer.indicate(address,sequence no,[data])ï¼š// æœ¬åŸè¯­ç”±æ•°æ®é“¾è·¯å±‚æ¿€å‘ï¼Œé€šçŸ¥ä»è®¾å¤‡HARTåè®®ç”¨æˆ·ä»å¯¹ç­‰åè®®å®ä½“ä¸­æ”¶åˆ°äº†ä¸€æ¡åˆæ³•çš„ä¼ é€æ¶ˆæ¯ã€‚ 
+   //   Transfer.response(status,sequence,[data])ï¼š// æœ¬åŸè¯­ç”±ä»è®¾å¤‡ç”¨æˆ·æ‰§è¡Œï¼Œå“åº”è¿›å…¥çš„transfer.indicateã€‚
+   //   Transfer.confirm(local status,response code,sequence no,[data])ï¼š// æœ¬åŸè¯­å‘ä¸»è®¾å¤‡åè®®ç”¨æˆ·è¿”å›å…ˆå‰çš„transfer.requestçš„æ‰§è¡Œç»“æœã€‚
 
 }
 */

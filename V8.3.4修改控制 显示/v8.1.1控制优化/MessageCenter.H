@@ -497,7 +497,7 @@
 # define  SP_21   21
 # define  SP_OK   22
 
-# define STP_10  24
+# define STP_10  24   //20261103 新增：激励验证步（原STP_A合并到此）
 # define STP_11  25
 
 //------------------用来确定在flash中的存储顺序的

@@ -4,7 +4,7 @@
 # include <msp430x16x.h>
 # include "delay.h"
 //-------------------------
-//  Òý½Å¶¨Òå
+//  å¼•è„šå®šä¹‰
 //-------------------------
 # define AD421_DIR    P1DIR 
 # define AD421_SEL    P1SEL  

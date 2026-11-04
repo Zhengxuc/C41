@@ -348,7 +348,7 @@ void Display_Data_Calculate(void)
                         //    DIS.Small_Dis[1] = 38;
                         //    DIS.Small_Dis[2] = 38;                       
                         //}
-                        //Y:20230417 ????¡ì??????
+                        //Y:20230417 ????Â§??????
                         g_PIDServiceData.SetPointDis -=5;
                         if (g_PIDServiceData.SetPointDis / 1000)
                         {
@@ -369,7 +369,7 @@ void Display_Data_Calculate(void)
                             DIS.Small_Dis[2] = 38;
                         }
                         g_PIDServiceData.SetPointDis +=5;
-                        //¡ì???????????
+                        //Â§???????????
                                           
                       }  break;
         case MAN    : {

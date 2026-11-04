@@ -27,6 +27,12 @@ unsigned int Times2 = 0;    //在整定低速时防止不动  计数
 unsigned int Times3 = 0;   //整定低速时使用
 unsigned char Dir_Flag = 0;  //整定速度方向
 
+//20261103 STP_10 激励验证步变量
+unsigned char g_verify_step = 0;        //0=初始化, 1~6=阶跃步, 7=结束
+unsigned int  g_verify_peak = 0;        //当前阶跃的峰值
+unsigned int  g_verify_stable_cnt = 0;  //稳定计数器
+unsigned int  g_verify_time_cnt = 0;    //单步计时器(20ms/tick, 200=4s)
+
 
 
 
@@ -524,6 +530,8 @@ void P1_2_Rdj_H(void)
          &&(OP.Meterage_L > OP.Down_Limited +OP.Range_M/10))//抛开两端
       {
         VAL.V_p2_7_TDN = Rdj_times/5; 
+        if(VAL.V_p2_7_TDN >= 50) VAL.V_p2_7_TDN = 30;      //大气缸砍到30
+        else if(VAL.V_p2_7_TDN <= 10) VAL.V_p2_7_TDN = 30; //小气缸抬到30
       }             
       if( OP.Meterage_L < OP.Down_Limited+20 )
       {               
@@ -549,6 +557,8 @@ void P1_2_Rdj_H(void)
          &&(OP.Meterage_L < OP.Up_Limited - OP.Range_M/10))//抛开两端
       {
         VAL.V_p2_7_TDN = Rdj_times/5;
+         if(VAL.V_p2_7_TDN >= 50) VAL.V_p2_7_TDN = 30;      //大气缸砍到30
+        else if(VAL.V_p2_7_TDN <= 10) VAL.V_p2_7_TDN = 30; //小气缸抬到30
       }
       if( OP.Meterage_L > OP.Up_Limited -20 )
       {
@@ -585,6 +595,8 @@ void P1_2_Rdj_H(void)
          &&(OP.Meterage_L < OP.Up_Limited - OP.Range_M/10))//抛开两端
       {
         VAL.V_p2_6_TUP = Rdj_times/5;
+        if(VAL.V_p2_6_TUP >= 50) VAL.V_p2_6_TUP = 30;      //大气缸砍到30
+        else if(VAL.V_p2_6_TUP <= 10) VAL.V_p2_6_TUP = 30; //小气缸抬到30
       }             
       if( OP.Meterage_L > OP.Up_Limited -20)
       {                 
@@ -610,6 +622,8 @@ void P1_2_Rdj_H(void)
          &&(OP.Meterage_L > OP.Down_Limited +OP.Range_M/10))//抛开两端
       {
         VAL.V_p2_6_TUP = Rdj_times/5;               
+        if(VAL.V_p2_6_TUP >= 50) VAL.V_p2_6_TUP = 30;      //大气缸砍到30
+        else if(VAL.V_p2_6_TUP <= 10) VAL.V_p2_6_TUP = 30; //小气缸抬到30
       }            
       if( OP.Meterage_L < OP.Down_Limited+20  )
       {                  
@@ -1194,7 +1208,8 @@ void P1_2_Rdj_H(void)
       {
          VAL.V_p1_3BRND = V_p1_3 ;//恢复1.3   20220604 
            RelayCounter = 0;             
-           SYS.bit.Step = SP_OK;           
+           Rdj_times = 0;                   //20261103 复位，保证STP_10初始化执行
+           SYS.bit.Step = STP_10;           //20261103 改为进激励验证
 
       }
       else // RelayCounter == 4;进入大摩擦力整定
@@ -1206,8 +1221,9 @@ void P1_2_Rdj_H(void)
     else
     {
       RelayCounter = 0;
+      Rdj_times = 0;           //20261103 复位，保证STP_10初始化执行
       VAL.V_p1_3BRND = V_p1_3 ;//恢复1.3   20220604
-      SYS.bit.Step = SP_OK;   
+      SYS.bit.Step = STP_10;   //20261103 改为进激励验证
     }
     
     PIDcontrol_H(); //对应大摩擦力整定
@@ -1430,6 +1446,76 @@ void P1_2_Rdj_H(void)
   
   
   
+
+  //20261103 新增：STP_10 激励验证步（第一套函数 P1_2_Rdj_H）
+  case STP_10:{
+    int err_abs;
+    Rdj_times += 1;
+    ADC12_Convert(1);
+
+    if(g_verify_step == 0) {   //先回0%并稳定
+      if(Rdj_times <= 5) {
+        g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
+        g_verify_stable_cnt = 0;
+        g_verify_time_cnt = 0;
+        VAL.V_p1_3BRND = V_p1_3;
+        g_PIDServiceData.SetPoint = 0;
+      }
+      g_verify_time_cnt++;
+      err_abs = g_PIDServiceData.Cur_ValvePoint;
+      if(err_abs < 0) err_abs = -err_abs;
+      if(err_abs <= 3 && AD.g_vlow < 2 && AD.g_vlow > -2) {
+        g_verify_stable_cnt++;
+      } else {
+        g_verify_stable_cnt = 0;
+      }
+      if(g_verify_stable_cnt >= 100 || g_verify_time_cnt >= 400) {   //速度变小稳定2s 或 超时4s
+        g_verify_step = 1;
+        g_verify_stable_cnt = 0;
+        g_verify_time_cnt = 0;
+        g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
+        g_PIDServiceData.SetPoint = 250;
+      }
+      PIDcontrol_H();
+      break;
+    }
+
+    if(g_verify_step >= 1 && g_verify_step <= 3) {       //上行记峰值
+      if(g_PIDServiceData.Cur_ValvePoint > g_verify_peak)
+        g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
+    } else if(g_verify_step >= 4 && g_verify_step <= 6) { //下行记峰值
+      if(g_PIDServiceData.Cur_ValvePoint < g_verify_peak)
+        g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
+    }
+
+    g_verify_time_cnt++;
+    err_abs = g_PIDServiceData.SetPoint - g_PIDServiceData.Cur_ValvePoint;
+    if(err_abs < 0) err_abs = -err_abs;
+
+    if(err_abs <= 3 && AD.g_vlow < 2 && AD.g_vlow > -2) {
+      g_verify_stable_cnt++;
+    } else {
+      g_verify_stable_cnt = 0;
+    }
+
+    if(g_verify_stable_cnt >= 100 || g_verify_time_cnt >= 200) {   //速度变小稳定2s 或 超时4s，判定该阶跃
+      if(g_verify_step >= 1 && g_verify_step <= 3) {          //上行 0.3%超调(SetPoint+3)
+        if(g_verify_peak > g_PIDServiceData.SetPoint + 3) VAL.V_p2_6_TUP += 5;
+      } else if(g_verify_step >= 4 && g_verify_step <= 5) {   //下行 0.3%超调(SetPoint-3)
+        if(g_verify_peak < g_PIDServiceData.SetPoint - 3) VAL.V_p2_7_TDN += 5;
+      }
+      g_verify_step++;
+      g_verify_stable_cnt = 0;
+      g_verify_time_cnt = 0;
+      if(g_verify_step == 2) { g_PIDServiceData.SetPoint = 500; g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step == 3) { g_PIDServiceData.SetPoint = 750; g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step == 4) { g_PIDServiceData.SetPoint = 500; g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step == 5) { g_PIDServiceData.SetPoint = 250; g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step == 6) { g_PIDServiceData.SetPoint = 0;   g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step >= 7) { g_verify_step = 0; g_verify_time_cnt = 0; SYS.bit.Step = SP_OK; break; }
+    }
+    PIDcontrol_H();
+  }break;
 
   case SP_OK:{   //保存数据
     VAL.V_p1_3BRND = V_p1_3 ;//恢复1.3   20220515
@@ -1989,6 +2075,8 @@ void P1_2_Rdj(void)
          &&(OP.Meterage_L > OP.Down_Limited +OP.Range_M/10))//抛开两端
       {
         VAL.V_p2_7_TDN = Rdj_times/5; 
+        if(VAL.V_p2_7_TDN >= 50) VAL.V_p2_7_TDN = 30;      //大气缸砍到30
+        else if(VAL.V_p2_7_TDN <= 10) VAL.V_p2_7_TDN = 30; //小气缸抬到30
       }             
       if( OP.Meterage_L < OP.Down_Limited+20 )
       {               
@@ -2050,6 +2138,8 @@ void P1_2_Rdj(void)
          &&(OP.Meterage_L < OP.Up_Limited - OP.Range_M/10))//抛开两端
       {
         VAL.V_p2_6_TUP = Rdj_times/5;
+        if(VAL.V_p2_6_TUP >= 50) VAL.V_p2_6_TUP = 30;      //大气缸砍到30
+        else if(VAL.V_p2_6_TUP <= 10) VAL.V_p2_6_TUP = 30; //小气缸抬到30
 
       }             
       if( OP.Meterage_L > OP.Up_Limited -20)
@@ -2076,6 +2166,8 @@ void P1_2_Rdj(void)
          &&(OP.Meterage_L > OP.Down_Limited +OP.Range_M/10))//抛开两端
       {
         VAL.V_p2_6_TUP = Rdj_times/5;               
+        if(VAL.V_p2_6_TUP >= 50) VAL.V_p2_6_TUP = 30;      //大气缸砍到30
+        else if(VAL.V_p2_6_TUP <= 10) VAL.V_p2_6_TUP = 30; //小气缸抬到30
       }            
       if( OP.Meterage_L < OP.Down_Limited+20  )
       {                  
@@ -2434,10 +2526,11 @@ void P1_2_Rdj(void)
     if(RelayCounter >= 3)
     {
       RelayCounter = 0;
-      SYS.bit.Step = SP_OK;
+      Rdj_times = 0;           //20261103 复位，保证STP_10初始化执行
+      SYS.bit.Step = STP_10;   //20261103 改为进激励验证
     }
     
-    PIDcontrol(); 
+    PIDcontrol_H(); 
     //求超调量  上行
     if(OP.di_up >=1)
     {            
@@ -2676,6 +2769,76 @@ void P1_2_Rdj(void)
   }
   
   }break;  */         
+  //20261103 新增：STP_10 激励验证步（第二套函数 P1_2_Rdj）
+  case STP_10:{
+    int err_abs;
+    Rdj_times += 1;
+    ADC12_Convert(1);
+
+    if(g_verify_step == 0) {   //先回0%并稳定
+      if(Rdj_times <= 5) {
+        g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
+        g_verify_stable_cnt = 0;
+        g_verify_time_cnt = 0;
+        VAL.V_p1_3BRND = V_p1_3;
+        g_PIDServiceData.SetPoint = 0;
+      }
+      g_verify_time_cnt++;
+      err_abs = g_PIDServiceData.Cur_ValvePoint;
+      if(err_abs < 0) err_abs = -err_abs;
+      if(err_abs <= 3 && AD.g_vlow < 2 && AD.g_vlow > -2) {
+        g_verify_stable_cnt++;
+      } else {
+        g_verify_stable_cnt = 0;
+      }
+      if(g_verify_stable_cnt >= 100 || g_verify_time_cnt >= 200) {   //速度变小稳定2s 或 超时4s
+        g_verify_step = 1;
+        g_verify_stable_cnt = 0;
+        g_verify_time_cnt = 0;
+        g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
+        g_PIDServiceData.SetPoint = 250;
+      }
+      PIDcontrol_H();
+      break;
+    }
+
+    if(g_verify_step >= 1 && g_verify_step <= 3) {       //上行记峰值
+      if(g_PIDServiceData.Cur_ValvePoint > g_verify_peak)
+        g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
+    } else if(g_verify_step >= 4 && g_verify_step <= 6) { //下行记峰值
+      if(g_PIDServiceData.Cur_ValvePoint < g_verify_peak)
+        g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
+    }
+
+    g_verify_time_cnt++;
+    err_abs = g_PIDServiceData.SetPoint - g_PIDServiceData.Cur_ValvePoint;
+    if(err_abs < 0) err_abs = -err_abs;
+
+    if(err_abs <= 3 && AD.g_vlow < 2 && AD.g_vlow > -2) {
+      g_verify_stable_cnt++;
+    } else {
+      g_verify_stable_cnt = 0;
+    }
+
+    if(g_verify_stable_cnt >= 100 || g_verify_time_cnt >= 200) {   //速度变小稳定2s 或 超时4s，判定该阶跃
+      if(g_verify_step >= 1 && g_verify_step <= 3) {          //上行 0.3%超调(SetPoint+3)
+        if(g_verify_peak > g_PIDServiceData.SetPoint + 3) VAL.V_p2_6_TUP += 5;
+      } else if(g_verify_step >= 4 && g_verify_step <= 5) {   //下行 0.3%超调(SetPoint-3)
+        if(g_verify_peak < g_PIDServiceData.SetPoint - 3) VAL.V_p2_7_TDN += 5;
+      }
+      g_verify_step++;
+      g_verify_stable_cnt = 0;
+      g_verify_time_cnt = 0;
+      if(g_verify_step == 2) { g_PIDServiceData.SetPoint = 500; g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step == 3) { g_PIDServiceData.SetPoint = 750; g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step == 4) { g_PIDServiceData.SetPoint = 500; g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step == 5) { g_PIDServiceData.SetPoint = 250; g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step == 6) { g_PIDServiceData.SetPoint = 0;   g_verify_peak = g_PIDServiceData.Cur_ValvePoint; }
+      else if(g_verify_step >= 7) { g_verify_step = 0; g_verify_time_cnt = 0; SYS.bit.Step = SP_OK; break; }
+    }
+    PIDcontrol_H();
+  }break;
+
   case SP_OK:{   //保存数据         
     if(PID_ZZDflag ==1)
     {

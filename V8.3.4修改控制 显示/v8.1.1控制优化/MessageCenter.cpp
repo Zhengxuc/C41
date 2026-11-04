@@ -968,6 +968,7 @@ void MessageCenter( void )
                                                             case STP_7 :  DIS.ScreenB = ADJ60;  break;
                                                             case STP_8 :  DIS.ScreenB = ADJ70;  break;
                                                             case STP_9 :  DIS.ScreenB = ADJ80;  break;
+                                                            case STP_10 : DIS.ScreenB = ADJ90;  break; // 20261103 激励验证步
                                                             case SP_10 :  DIS.ScreenB = ADJ90;  break;
                                                             case SP_11 :  DIS.ScreenB = ADJ100;  break;
                                                             case SP_12 :  DIS.ScreenB = ADJ110;  break;
@@ -1106,6 +1107,7 @@ void MessageCenter( void )
                                                             case STP_7 :  DIS.ScreenS = SET_10_7; break;
                                                             case STP_8 :  DIS.ScreenS = SET_10_8; break;
                                                             case STP_9 :  DIS.ScreenS = SET_10_9; break;
+                                                            case STP_10 : DIS.ScreenS = SET10_10; break; // 20261103 激励验证步
                                                             case SP_10 :  DIS.ScreenS = SET10_10; break;
                                                             case SP_11 :  DIS.ScreenS = SET10_11; break;
                                                             case SP_12 :  DIS.ScreenS = SET10_12; break;

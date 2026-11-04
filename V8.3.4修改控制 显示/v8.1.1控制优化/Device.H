@@ -33,15 +33,15 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-//---------------------------------------------------------------------60¸ö×Ö½Ú
-extern OPERATION_REG OP;  // long      ²Ù×÷
-extern KEYBORAD_REG KB;   // long      ¼üÅÌ 
-extern ALARM_REG ALA;     // int       ±¨¾¯
-extern TICK_REG CLK;      // long      Ê±ÖÓ
-extern SYS_REG SYS;       // int       ÏµÍ³
-extern VAL_REG VAL;       // int*18    ÔËĞĞÖµ±£´æ
+//---------------------------------------------------------------------60ä¸ªå­—èŠ‚
+extern OPERATION_REG OP;  // long      æ“ä½œ
+extern KEYBORAD_REG KB;   // long      é”®ç›˜ 
+extern ALARM_REG ALA;     // int       æŠ¥è­¦
+extern TICK_REG CLK;      // long      æ—¶é’Ÿ
+extern SYS_REG SYS;       // int       ç³»ç»Ÿ
+extern VAL_REG VAL;       // int*18    è¿è¡Œå€¼ä¿å­˜
 extern PWM_REG PWM;       // int
-extern AD_REG AD;         // int*24    AD²ÉÑù
+extern AD_REG AD;         // int*24    ADé‡‡æ ·
 //extern SYS1_REG SYS1;
 
 extern unsigned char rec_ptr;

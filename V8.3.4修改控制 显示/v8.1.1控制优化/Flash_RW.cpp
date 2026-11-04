@@ -106,7 +106,7 @@ const unsigned int reset_datum[64] = {
 
 void Read_SegA (void)
 {
-      WDTCTL = WDTPW + WDTHOLD;   //¹Ø±Õ¿´ÃÅ¹·
+      WDTCTL = WDTPW + WDTHOLD;   //å…³é—­çœ‹é—¨ç‹—
       int *Flash_ptrA;                         // Segment A pointer
       unsigned int  temp_pointer[64]; 
       unsigned int i;
@@ -118,7 +118,7 @@ void Read_SegA (void)
       }
       FCTL1 = FWKEY;                           // Clear WRT bit
              
-      WDTCTL = WDT_MRST_32;    //·Å¹·,²¢Ñ¡Ê±ÖÓÔ´ÎªSMCLK,¼´¶¨Ê±Ê±¼äÎªSMCLK/32768
+      WDTCTL = WDT_MRST_32;    //æ”¾ç‹—,å¹¶é€‰æ—¶é’Ÿæºä¸ºSMCLK,å³å®šæ—¶æ—¶é—´ä¸ºSMCLK/32768
       //------------------------------------------------------
       VAL.V_p1_1_RCR = temp_pointer[v_p1_1_RCR];   
       VAL.V_p1_3BRND = temp_pointer[v_p1_3BRND];  
@@ -226,17 +226,17 @@ void Read_SegA (void)
 
 
 
-//Ğ´ÈëÇ°±ØĞëÏÈ²Á³ı£¨²Á³ıºóËùÓĞÎ»Îª 1£©
-//Ö»ÄÜ½« 1 Ğ´³É 0£¬²»ÄÜ½« 0 Ğ´³É 1£¨³ı·ÇÏÈ²Á³ı£©
-//²Á³ıÒÔ¶Î (Segment) Îªµ¥Î»£¬Ğ´Èë¿ÉÒÔ×Ö½ÚÎªµ¥Î»
-//²Ù×÷ Flash ĞèÒª½âËø£¬²¢×ñÑ­ÌØ¶¨Ê±Ğò
+//å†™å…¥å‰å¿…é¡»å…ˆæ“¦é™¤ï¼ˆæ“¦é™¤åæ‰€æœ‰ä½ä¸º 1ï¼‰
+//åªèƒ½å°† 1 å†™æˆ 0ï¼Œä¸èƒ½å°† 0 å†™æˆ 1ï¼ˆé™¤éå…ˆæ“¦é™¤ï¼‰
+//æ“¦é™¤ä»¥æ®µ (Segment) ä¸ºå•ä½ï¼Œå†™å…¥å¯ä»¥å­—èŠ‚ä¸ºå•ä½
+//æ“ä½œ Flash éœ€è¦è§£é”ï¼Œå¹¶éµå¾ªç‰¹å®šæ—¶åº
 
 
 #if  WRITE_FACTORY
 void  Factory_Start(void)
 {
-     _DINT();                    // disable all interrupts¡¡
-      WDTCTL = WDTPW + WDTHOLD;   //¹Ø±Õ¿´ÃÅ¹·
+     _DINT();                    // disable all interruptsã€€
+      WDTCTL = WDTPW + WDTHOLD;   //å…³é—­çœ‹é—¨ç‹—
       
       unsigned int *Flash_ptr;                          // Flash pointer
       unsigned int const *temp_pointer = &reset_datum[0];
@@ -287,7 +287,7 @@ void  Factory_Start(void)
       while(FCTL3 & BUSY);
       FCTL3 = FWKEY + LOCK;
       _EINT();   
-      WDTCTL = WDT_MRST_32;    //·Å¹·,²¢Ñ¡Ê±ÖÓÔ´ÎªSMCLK,¼´¶¨Ê±Ê±¼äÎªSMCLK/32768
+      WDTCTL = WDT_MRST_32;    //æ”¾ç‹—,å¹¶é€‰æ—¶é’Ÿæºä¸ºSMCLK,å³å®šæ—¶æ—¶é—´ä¸ºSMCLK/32768
       
       VAL.V_p1_1_RCR = temp_pointer2[v_p1_1_RCR];   
       VAL.V_p1_3BRND = temp_pointer2[v_p1_3BRND];  

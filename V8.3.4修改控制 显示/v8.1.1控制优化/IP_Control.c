@@ -8,73 +8,73 @@
 //double Error_IP = 0.0f;
 //
 //int pwm  = 0 ;
-//// ¶¨ÒåPID²ÎÊı
-//#define KP 10000.0f  // ±ÈÀıÏµÊı
-//#define KI 0.0f      // »ı·ÖÏµÊı(ĞèÒªµ÷Õû)
-//#define KD 0.0f    // Î¢·ÖÏµÊı(ĞèÒªµ÷Õû)
+//// å®šä¹‰PIDå‚æ•°
+//#define KP 10000.0f  // æ¯”ä¾‹ç³»æ•°
+//#define KI 0.0f      // ç§¯åˆ†ç³»æ•°(éœ€è¦è°ƒæ•´)
+//#define KD 0.0f    // å¾®åˆ†ç³»æ•°(éœ€è¦è°ƒæ•´)
 //
 //static float integral = 0;
 //static float prev_error = 0;
-//// ¶¨Òå¾²Ä¦²ÁãĞÖµ
-//#define FRICTION_THRESHOLD 0.05f  // 5%µÄ¿ª¶È
+//// å®šä¹‰é™æ‘©æ“¦é˜ˆå€¼
+//#define FRICTION_THRESHOLD 0.05f  // 5%çš„å¼€åº¦
 //
 //void IP_PidControl(void){
 //    ADC12_Convert(1); 
 //    LineCalculate(); 
 //    
-//    g_PIDServiceData.Cur_ValvePoint = (g_dsinAngel_now - g_dsinAngel_down)*1000.0/(g_dsinAngel_up - g_dsinAngel_down);  //¼ÆËã·´À¡
+//    g_PIDServiceData.Cur_ValvePoint = (g_dsinAngel_now - g_dsinAngel_down)*1000.0/(g_dsinAngel_up - g_dsinAngel_down);  //è®¡ç®—åé¦ˆ
 //    
-//    //¼ÆËãµçÁ÷¶ÔÓ¦µÄÎ»ÖÃ £¨ÆÚÍûÎ»ÖÃ£©
-//    if(AD.CurrentIn < OP.Down_C) {g_PIDServiceData.SetPoint =0;}      //Èç¹ûµçÁ÷Ğ¡ÓÚ×îĞ¡
+//    //è®¡ç®—ç”µæµå¯¹åº”çš„ä½ç½® ï¼ˆæœŸæœ›ä½ç½®ï¼‰
+//    if(AD.CurrentIn < OP.Down_C) {g_PIDServiceData.SetPoint =0;}      //å¦‚æœç”µæµå°äºæœ€å°
 //    
 //    else if (AD.CurrentIn > OP.Up_C ){g_PIDServiceData.SetPoint =1000;}
 //    
-//    else {  g_PIDServiceData.SetPoint =  Formula( AD.CurrentIn );}     //¼ÆËã¿ØÖÆÎ»ÖÃ
+//    else {  g_PIDServiceData.SetPoint =  Formula( AD.CurrentIn );}     //è®¡ç®—æ§åˆ¶ä½ç½®
 //    
 //    if(g_PIDServiceData.SetPoint > 1000)  {
-//        g_PIDServiceData.SetPoint =1000;             //ÏŞ·ù
+//        g_PIDServiceData.SetPoint =1000;             //é™å¹…
 //    }
 //    
-//  if( VAL.V_p2_4_ACT == V_REVR) {//¶¨Î»Æ÷·´Ïò        set point ÎªÏà·´
+//  if( VAL.V_p2_4_ACT == V_REVR) {//å®šä½å™¨åå‘        set point ä¸ºç›¸å
 //        g_PIDServiceData.SetPoint = 1000 - g_PIDServiceData.SetPoint;
 //   }
 //
 //   
 //   Error_IP =   (g_PIDServiceData.SetPoint - g_PIDServiceData.Cur_ValvePoint) / 1000.0f;
 //   
-//   // ¼ÆËãPID¸÷Ïî
-//      integral += Error_IP;  // »ı·ÖÏîÀÛ»ı
+//   // è®¡ç®—PIDå„é¡¹
+//      integral += Error_IP;  // ç§¯åˆ†é¡¹ç´¯ç§¯
 //      
-//      if(fabs(Error_IP) > 0.3) {  // Ö»ÔÚÎó²î½Ï´óÊ±»ı·Ö
+//      if(fabs(Error_IP) > 0.3) {  // åªåœ¨è¯¯å·®è¾ƒå¤§æ—¶ç§¯åˆ†
 //          integral += Error_IP;
 //      } else {
-//          integral = 0;  // ¿¹»ı·Ö±¥ºÍ
+//          integral = 0;  // æŠ—ç§¯åˆ†é¥±å’Œ
 //      }
 //
-//      float derivative = Error_IP - prev_error;  // Î¢·ÖÏî
+//      float derivative = Error_IP - prev_error;  // å¾®åˆ†é¡¹
 //      prev_error = Error_IP;
 //
 //      pwm = KP * Error_IP + KI * integral + KD * derivative;
 //      
 ////      if(fabs(Error_IP) > FRICTION_THRESHOLD) {
-////    // ÔÚ³õÊ¼ÒÆ¶¯Ê±Ôö¼Ó¶îÍâµÄÂö³å¿Ë·ş¾²Ä¦²Á
+////    // åœ¨åˆå§‹ç§»åŠ¨æ—¶å¢åŠ é¢å¤–çš„è„‰å†²å…‹æœé™æ‘©æ“¦
 ////      pwm += (pwm > 0) ? FRICTION_COMP : -FRICTION_COMP;
 ////        }
 //      
-//       // 3. ¶¯Ì¬Âö³åÉú³É£¨ÒıÈë»ı·ÖÏî£©
+//       // 3. åŠ¨æ€è„‰å†²ç”Ÿæˆï¼ˆå¼•å…¥ç§¯åˆ†é¡¹ï¼‰
 //    if(fabs(Error_IP) > ( VAL.V_p1_3BRND/ 1000.0f)) {
-//        // ±ÈÀıÏî + »ı·ÖÏî
+//        // æ¯”ä¾‹é¡¹ + ç§¯åˆ†é¡¹
 //        pwm =    Error_IP  *  11000  ;
 //        
-//        // Âö³å¿í¶ÈÏŞ·ù
+//        // è„‰å†²å®½åº¦é™å¹…
 ////        if(pulse < 15) pulse = 15;
 ////        if(pulse > 400) pulse = 400;
 ////            DAC12_0DAT= 1200  + pwm *1.2;
-////            DAC12_1DAT = 0;    //¸ÄÎª·´ÏòÊä³ö
+////            DAC12_1DAT = 0;    //æ”¹ä¸ºåå‘è¾“å‡º
 //        
 //        
 //        
-//        // ·½Ïò¿ØÖÆ
+//        // æ–¹å‘æ§åˆ¶
 //        if(Error_IP > 0) {
 //              OutPut_Positive(pwm);
 ////            delay(pulse+11);
@@ -98,7 +98,7 @@
     double pwm =0.0f ;
     double Error_IP = 0.0f;
     double dynamic_KP =0.0f ;
-    /* ×´Ì¬±äÁ¿ */
+    /* çŠ¶æ€å˜é‡ */
     static float integral = 0;
     static float prev_error = 0;
     static uint8_t direction_changes = 0;
@@ -106,28 +106,28 @@
     static uint32_t stationary_time = 0;
     static float prev_pwm = 0;
 
-    double KP_BIG       =   1200.0f  ;  // ´óÎó²î±ÈÀıÏµÊı
-    double KP_SMALL     =    1000.0f  ;   // Ğ¡Îó²î±ÈÀıÏµÊı
+    double KP_BIG       =   1200.0f  ;  // å¤§è¯¯å·®æ¯”ä¾‹ç³»æ•°
+    double KP_SMALL     =    1000.0f  ;   // å°è¯¯å·®æ¯”ä¾‹ç³»æ•°
   
 void IP_PidControl_1(void) {
-    /* ²ÎÊı¶¨Òå */
+    /* å‚æ•°å®šä¹‰ */
 
-    #define KI              0.0f        // »ı·ÖÏµÊı
-    #define KD              0.0f      // Î¢·ÖÏµÊı
-    #define FRICTION_COMP   1200        // »ù´¡Ä¦²Á²¹³¥(ĞèÊµ²âµ÷Õû)
-    #define DEAD_ZONE       0.01f       // 1%ËÀÇø
-    #define OSCILLATION_THRESHOLD 3     // Õñµ´¼ì²âãĞÖµ
-    #define MIN_RESPONSE_TIME 200       // ×îĞ¡ÏìÓ¦Ê±¼ä(ms)
-    #define CONTROL_PERIOD 10          //¿ØÖÆÖÜÆÚ10ms
+    #define KI              0.0f        // ç§¯åˆ†ç³»æ•°
+    #define KD              0.0f      // å¾®åˆ†ç³»æ•°
+    #define FRICTION_COMP   1200        // åŸºç¡€æ‘©æ“¦è¡¥å¿(éœ€å®æµ‹è°ƒæ•´)
+    #define DEAD_ZONE       0.01f       // 1%æ­»åŒº
+    #define OSCILLATION_THRESHOLD 3     // æŒ¯è¡æ£€æµ‹é˜ˆå€¼
+    #define MIN_RESPONSE_TIME 200       // æœ€å°å“åº”æ—¶é—´(ms)
+    #define CONTROL_PERIOD 10          //æ§åˆ¶å‘¨æœŸ10ms
 
     ValveRodSpeedNEW(5);
     
-    /* 1. Êı¾İ²É¼¯Óë»ù±¾¼ÆËã */
+    /* 1. æ•°æ®é‡‡é›†ä¸åŸºæœ¬è®¡ç®— */
     ADC12_Convert(1);
     LineCalculate();
     g_PIDServiceData.Cur_ValvePoint = (g_dsinAngel_now - g_dsinAngel_down)*1000.0/(g_dsinAngel_up - g_dsinAngel_down);
     
-    /* Éè¶¨Öµ´¦Àí */
+    /* è®¾å®šå€¼å¤„ç† */
     if(AD.CurrentIn < OP.Down_C) g_PIDServiceData.SetPoint = 0;
     else if(AD.CurrentIn > OP.Up_C) g_PIDServiceData.SetPoint = 1000;
     else g_PIDServiceData.SetPoint = Formula(AD.CurrentIn);
@@ -135,37 +135,37 @@ void IP_PidControl_1(void) {
     if(g_PIDServiceData.SetPoint > 1000) g_PIDServiceData.SetPoint = 1000;
     if(VAL.V_p2_4_ACT == V_REVR) g_PIDServiceData.SetPoint = 1000 - g_PIDServiceData.SetPoint;
     
-    /* 2. Îó²î¼ÆËãÓë¶¯Ì¬´¦Àí */
+    /* 2. è¯¯å·®è®¡ç®—ä¸åŠ¨æ€å¤„ç† */
     Error_IP = (g_PIDServiceData.SetPoint - g_PIDServiceData.Cur_ValvePoint) / 1000.0f;
     
-    /* Õñµ´¼ì²â */
-//    if((Error_IP * prev_error) < 0) {   //Îó²î±äºÅ
+    /* æŒ¯è¡æ£€æµ‹ */
+//    if((Error_IP * prev_error) < 0) {   //è¯¯å·®å˜å·
 //        if(++direction_changes > OSCILLATION_THRESHOLD) {
 //          
-//            KP_BIG *= 0.7f;  // ×Ô¶¯½µÔöÒæ
+//            KP_BIG *= 0.7f;  // è‡ªåŠ¨é™å¢ç›Š
 //            direction_changes = 0;
 //        }
 //    } else {
 //        direction_changes = 0;
 //    }
     
-//    /* 3. ¶¯Ì¬PID¼ÆËã */
+//    /* 3. åŠ¨æ€PIDè®¡ç®— */
 //     dynamic_KP = (fabs(Error_IP) > 0.5f) ? KP_BIG   : 
 //                      (fabs(Error_IP) > 0.2f) ? (KP_BIG+KP_SMALL)/2 : KP_SMALL;
     
-    /* »ı·ÖÏî´¦Àí(¿¹±¥ºÍ) */
+    /* ç§¯åˆ†é¡¹å¤„ç†(æŠ—é¥±å’Œ) */
     if(fabs(Error_IP)  <  0.3f) {
         integral += Error_IP;
-        integral = CONSTRAIN(integral, -1000, 1000);  // ÏŞÖÆ»ı·Ö·¶Î§
+        integral = CONSTRAIN(integral, -1000, 1000);  // é™åˆ¶ç§¯åˆ†èŒƒå›´
     } else {
-//        integral *= 0.9f;  // ½¥Ïû»ı·Ö
-        integral = 0.0f;  // ½¥Ïû»ı·Ö
+//        integral *= 0.9f;  // æ¸æ¶ˆç§¯åˆ†
+        integral = 0.0f;  // æ¸æ¶ˆç§¯åˆ†
     }
     
-    /* Î¢·ÖÏî´¦Àí */
-    float derivative = (Error_IP - prev_error);  // ¼ÙÉè1msÖÜÆÚs
+    /* å¾®åˆ†é¡¹å¤„ç† */
+    float derivative = (Error_IP - prev_error);  // å‡è®¾1mså‘¨æœŸs
     
-    /* 4. Ä¦²Á²¹³¥²ßÂÔ */
+    /* 4. æ‘©æ“¦è¡¥å¿ç­–ç•¥ */
 //    float actual_comp = FRICTION_COMP;
     
 //    if(fabs(g_vl) < 2) {
@@ -176,30 +176,30 @@ void IP_PidControl_1(void) {
 //        stationary_time = 0;
 //    }
     
-    /* 5. ×ÛºÏÊä³ö¼ÆËã */
+    /* 5. ç»¼åˆè¾“å‡ºè®¡ç®— */
      pwm = KP_BIG * Error_IP + KI * integral + KD * derivative;
     
-    /* Ğ¡Îó²îÇøÌØÊâ´¦Àí */
+    /* å°è¯¯å·®åŒºç‰¹æ®Šå¤„ç† */
 //    if(fabs(Error_IP) < 0.03f && fabs(prev_pwm) < FRICTION_COMP*0.8f) {
 //        pwm = (Error_IP > 0) ? actual_comp : -actual_comp;
 //    }
     
-    /* 6. ÏìÓ¦ÑÓÊ±ºÍËÀÇø´¦Àí */
+    /* 6. å“åº”å»¶æ—¶å’Œæ­»åŒºå¤„ç† */
 //    if(fabs(Error_IP) > DEAD_ZONE) {
 //        error_persist_time += CONTROL_PERIOD;
 //        if(error_persist_time < MIN_RESPONSE_TIME) {
-//            pwm = 0;  // Î´´ïµ½×îĞ¡ÏìÓ¦Ê±¼ä
+//            pwm = 0;  // æœªè¾¾åˆ°æœ€å°å“åº”æ—¶é—´
 //        }
 //    } else {
 //        error_persist_time = 0;
-//        pwm = 0;  // ËÀÇøÄÚÎŞÊä³ö
+//        pwm = 0;  // æ­»åŒºå†…æ— è¾“å‡º
 //    }
     
-    /* 7. Êä³öÏŞ·ùºÍ±£»¤ */
+    /* 7. è¾“å‡ºé™å¹…å’Œä¿æŠ¤ */
 //    pwm = constrain(pwm, -MAX_PWM, MAX_PWM);
     
 
-     //Êä³ö
+     //è¾“å‡º
      
      if(fabs(Error_IP) > VAL.V_p1_3BRND / 1000.0f){
        if(  pwm > 0)
@@ -217,7 +217,7 @@ void IP_PidControl_1(void) {
      }
     
      
-    /* ×´Ì¬¸üĞÂ */
+    /* çŠ¶æ€æ›´æ–° */
     prev_error = Error_IP;
     prev_pwm = pwm;
     

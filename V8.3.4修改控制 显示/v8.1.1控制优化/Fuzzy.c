@@ -3,66 +3,66 @@
 
 
 
-//¾«Ó¢±£ÁôÂÊÍ¨³£ÊÇÖ¸ÔÚÒÅ´«Ëã·¨µÈÓÅ»¯Ëã·¨ÖĞ£¬²ÉÓÃ¾«Ó¢±£Áô²ßÂÔÊ±£¬
-//±£Áôµ½ÏÂÒ»´úµÄ¾«Ó¢¸öÌåÊıÁ¿Õ¼ÖÖÈº¸öÌå×ÜÊıµÄ±ÈÀı¡£
-//ÒÅ´«Ëã·¨ÊÇÒ»ÖÖÊÜÉúÎï½ø»¯¹ı³ÌÆô·¢µÄÆô·¢Ê½ËÑË÷Ëã·¨¡£
-//ÔÚÒÅ´«Ëã·¨µÄ½ø»¯¹ı³ÌÖĞ£¬»áÍ¨¹ıÑ¡Ôñ¡¢½»²æºÍ±äÒìµÈ²Ù×÷²úÉúĞÂÒ»´úÖÖÈº¡£
-//ÎªÁË·ÀÖ¹µ±Ç°ÈºÌåµÄ×îÓÅ¸öÌåÔÚÏÂÒ»´ú·¢Éú¶ªÊ§£¬µ¼ÖÂËã·¨²»ÄÜÊÕÁ²µ½È«¾Ö×îÓÅ½â£¬»á²ÉÓÃ¾«Ó¢±£Áô²ßÂÔ¡£
-//¸Ã²ßÂÔ»á°ÑÈºÌåÔÚ½ø»¯¹ı³ÌÖĞÆù½ñ³öÏÖµÄ×îºÃ¸öÌå£¬²»½øĞĞÅä¶Ô½»²æ¶øÖ±½Ó¸´ÖÆµ½ÏÂÒ»´úÖĞ¡£
-//ÀıÈç£¬ÈôÖÖÈº¹æÄ£Îª 100£¬ÉèÖÃ¾«Ó¢¸öÌåÊıÁ¿Îª 5£¬
-//ÈÃÕâ 5 ¸ö×îÓÅ¸öÌåÖ±½Ó½øÈëÏÂÒ»´ú£¬ÄÇÃ´¾«Ó¢±£ÁôÂÊ¾ÍÊÇ 5%¡£½Ï¸ßµÄ¾«Ó¢±£ÁôÂÊ¿ÉÒÔ¼Ó¿ìËã·¨µÄÊÕÁ²ËÙ¶È£¬
-//µ«¿ÉÄÜ»áÓ°ÏìÖÖÈºµÄ¶àÑùĞÔ£¬Ôö¼ÓÏİÈë¾Ö²¿×îÓÅ½âµÄ·çÏÕ£»
-//½ÏµÍµÄ¾«Ó¢±£ÁôÂÊÔò¿ÉÄÜµ¼ÖÂ×îÓÅ½â²»Ò×±»±£Áô£¬Ó°ÏìËã·¨µÄÊÕÁ²ĞÔÄÜ¡£
+//ç²¾è‹±ä¿ç•™ç‡é€šå¸¸æ˜¯æŒ‡åœ¨é—ä¼ ç®—æ³•ç­‰ä¼˜åŒ–ç®—æ³•ä¸­ï¼Œé‡‡ç”¨ç²¾è‹±ä¿ç•™ç­–ç•¥æ—¶ï¼Œ
+//ä¿ç•™åˆ°ä¸‹ä¸€ä»£çš„ç²¾è‹±ä¸ªä½“æ•°é‡å ç§ç¾¤ä¸ªä½“æ€»æ•°çš„æ¯”ä¾‹ã€‚
+//é—ä¼ ç®—æ³•æ˜¯ä¸€ç§å—ç”Ÿç‰©è¿›åŒ–è¿‡ç¨‹å¯å‘çš„å¯å‘å¼æœç´¢ç®—æ³•ã€‚
+//åœ¨é—ä¼ ç®—æ³•çš„è¿›åŒ–è¿‡ç¨‹ä¸­ï¼Œä¼šé€šè¿‡é€‰æ‹©ã€äº¤å‰å’Œå˜å¼‚ç­‰æ“ä½œäº§ç”Ÿæ–°ä¸€ä»£ç§ç¾¤ã€‚
+//ä¸ºäº†é˜²æ­¢å½“å‰ç¾¤ä½“çš„æœ€ä¼˜ä¸ªä½“åœ¨ä¸‹ä¸€ä»£å‘ç”Ÿä¸¢å¤±ï¼Œå¯¼è‡´ç®—æ³•ä¸èƒ½æ”¶æ•›åˆ°å…¨å±€æœ€ä¼˜è§£ï¼Œä¼šé‡‡ç”¨ç²¾è‹±ä¿ç•™ç­–ç•¥ã€‚
+//è¯¥ç­–ç•¥ä¼šæŠŠç¾¤ä½“åœ¨è¿›åŒ–è¿‡ç¨‹ä¸­è¿„ä»Šå‡ºç°çš„æœ€å¥½ä¸ªä½“ï¼Œä¸è¿›è¡Œé…å¯¹äº¤å‰è€Œç›´æ¥å¤åˆ¶åˆ°ä¸‹ä¸€ä»£ä¸­ã€‚
+//ä¾‹å¦‚ï¼Œè‹¥ç§ç¾¤è§„æ¨¡ä¸º 100ï¼Œè®¾ç½®ç²¾è‹±ä¸ªä½“æ•°é‡ä¸º 5ï¼Œ
+//è®©è¿™ 5 ä¸ªæœ€ä¼˜ä¸ªä½“ç›´æ¥è¿›å…¥ä¸‹ä¸€ä»£ï¼Œé‚£ä¹ˆç²¾è‹±ä¿ç•™ç‡å°±æ˜¯ 5%ã€‚è¾ƒé«˜çš„ç²¾è‹±ä¿ç•™ç‡å¯ä»¥åŠ å¿«ç®—æ³•çš„æ”¶æ•›é€Ÿåº¦ï¼Œ
+//ä½†å¯èƒ½ä¼šå½±å“ç§ç¾¤çš„å¤šæ ·æ€§ï¼Œå¢åŠ é™·å…¥å±€éƒ¨æœ€ä¼˜è§£çš„é£é™©ï¼›
+//è¾ƒä½çš„ç²¾è‹±ä¿ç•™ç‡åˆ™å¯èƒ½å¯¼è‡´æœ€ä¼˜è§£ä¸æ˜“è¢«ä¿ç•™ï¼Œå½±å“ç®—æ³•çš„æ”¶æ•›æ€§èƒ½ã€‚
 
 
 
-// ¶¨ÒåÏµÍ³²ÎÊı
-#define INPUT_DIM 2       // ÊäÈëÎ¬¶È£ºÎó²îºÍÎó²î±ä»¯ÂÊ
-#define OUTPUT_DIM 1      // Êä³öÎ¬¶È
+// å®šä¹‰ç³»ç»Ÿå‚æ•°
+#define INPUT_DIM 2       // è¾“å…¥ç»´åº¦ï¼šè¯¯å·®å’Œè¯¯å·®å˜åŒ–ç‡
+#define OUTPUT_DIM 1      // è¾“å‡ºç»´åº¦
 
-#define RULE_NUM 9        // ¹æÔòÊıÁ¿£¨3x3¾ØÕó£©      //ÕâÀïµÄÊıÁ¿Ô½´óÓ¦¸ÃÔ½×¼
-#define MEMBERSHIP_NUM 3  // Ã¿¸öÊäÈëµÄÁ¥Êô¶Èº¯ÊıÊıÁ¿
-#define POPULATION_SIZE 50 // ÒÅ´«Ëã·¨ÖÖÈº´óĞ¡
-#define GENERATIONS 100    // ÒÅ´«Ëã·¨µü´ú´úÊı
-#define CROSSOVER_RATE 0.8 // ½»²æ¸ÅÂÊ
-#define MUTATION_RATE 0.1  // ±äÒì¸ÅÂÊ
+#define RULE_NUM 9        // è§„åˆ™æ•°é‡ï¼ˆ3x3çŸ©é˜µï¼‰      //è¿™é‡Œçš„æ•°é‡è¶Šå¤§åº”è¯¥è¶Šå‡†
+#define MEMBERSHIP_NUM 3  // æ¯ä¸ªè¾“å…¥çš„éš¶å±åº¦å‡½æ•°æ•°é‡
+#define POPULATION_SIZE 50 // é—ä¼ ç®—æ³•ç§ç¾¤å¤§å°
+#define GENERATIONS 100    // é—ä¼ ç®—æ³•è¿­ä»£ä»£æ•°
+#define CROSSOVER_RATE 0.8 // äº¤å‰æ¦‚ç‡
+#define MUTATION_RATE 0.1  // å˜å¼‚æ¦‚ç‡
 
-#define ELITISM_RATE 0.1   // ¾«Ó¢±£ÁôÂÊ  Ö»ÓĞÊ®·ÖÖ®Ò»ÄÜ±£Áô
+#define ELITISM_RATE 0.1   // ç²¾è‹±ä¿ç•™ç‡  åªæœ‰ååˆ†ä¹‹ä¸€èƒ½ä¿ç•™
 
-#define TRAINING_SAMPLES 100 // ÑµÁ·Ñù±¾Êı
+#define TRAINING_SAMPLES 100 // è®­ç»ƒæ ·æœ¬æ•°
 
-// Ä£ºıÏµÍ³²ÎÊı½á¹¹
+// æ¨¡ç³Šç³»ç»Ÿå‚æ•°ç»“æ„
 typedef struct {
-    // Á¥Êô¶Èº¯Êı²ÎÊı: [ÊäÈëÎ¬¶È][Á¥Êô¶Èº¯ÊıÊı][ÖĞĞÄ,¿í¶È]
+    // éš¶å±åº¦å‡½æ•°å‚æ•°: [è¾“å…¥ç»´åº¦][éš¶å±åº¦å‡½æ•°æ•°][ä¸­å¿ƒ,å®½åº¦]
     float membership_params[INPUT_DIM][MEMBERSHIP_NUM][2];
-    // ¹æÔòÈ¨ÖØ: [¹æÔòÊı][Êä³öÎ¬¶È]
+    // è§„åˆ™æƒé‡: [è§„åˆ™æ•°][è¾“å‡ºç»´åº¦]
     float rule_weights[RULE_NUM][OUTPUT_DIM];
 } FuzzyParams;
 
-// ÑµÁ·Ñù±¾½á¹¹
+// è®­ç»ƒæ ·æœ¬ç»“æ„
 typedef struct {
-    float inputs[INPUT_DIM];   //ÊäÈëÎ¬¶È2 
-    float target[OUTPUT_DIM];   //Êä³öÎ¬¶È1
+    float inputs[INPUT_DIM];   //è¾“å…¥ç»´åº¦2 
+    float target[OUTPUT_DIM];   //è¾“å‡ºç»´åº¦1
 } TrainingSample;
 
-// ÒÅ´«Ëã·¨¸öÌå½á¹¹
+// é—ä¼ ç®—æ³•ä¸ªä½“ç»“æ„
 typedef struct {
     FuzzyParams params;
     float fitness;
 } Individual;
 
-// ÖÖÈº½á¹¹
+// ç§ç¾¤ç»“æ„
 typedef struct {
     Individual *individuals;
     int size;
 } Population;
 
-// ¸ßË¹Á¥Êô¶Èº¯Êı
+// é«˜æ–¯éš¶å±åº¦å‡½æ•°
 float gaussian_membership(float x, float center, float width) {
     return exp(-pow((x - center) / width, 2));
 }
 
-// ¼ÆËãÊäÈë¶Ô¸÷Á¥Êô¶Èº¯ÊıµÄÁ¥Êô¶ÈÖµ
+// è®¡ç®—è¾“å…¥å¯¹å„éš¶å±åº¦å‡½æ•°çš„éš¶å±åº¦å€¼
 void calculate_memberships(float inputs[], FuzzyParams *params, 
                           float membership_values[INPUT_DIM][MEMBERSHIP_NUM]) {
     for (int i = 0; i < INPUT_DIM; i++) {
@@ -74,20 +74,20 @@ void calculate_memberships(float inputs[], FuzzyParams *params,
     }
 }
 
-// ÆÀ¹ÀËùÓĞ¹æÔòµÄ¼¤·¢Ç¿¶È
+// è¯„ä¼°æ‰€æœ‰è§„åˆ™çš„æ¿€å‘å¼ºåº¦
 void evaluate_rules(float membership_values[INPUT_DIM][MEMBERSHIP_NUM], 
                    FuzzyParams *params, float rule_firings[RULE_NUM]) {
     int rule_index = 0;
     for (int m1 = 0; m1 < MEMBERSHIP_NUM; m1++) {
         for (int m2 = 0; m2 < MEMBERSHIP_NUM; m2++) {
-            // Ê¹ÓÃMIN²Ù×÷·û¼ÆËã¹æÔò¼¤·¢Ç¿¶È
+            // ä½¿ç”¨MINæ“ä½œç¬¦è®¡ç®—è§„åˆ™æ¿€å‘å¼ºåº¦
             rule_firings[rule_index] = fmin(membership_values[0][m1], membership_values[1][m2]);
             rule_index++;
         }
     }
 }
 
-// È¥Ä£ºı»¯£¨¼ÓÈ¨Æ½¾ù£©
+// å»æ¨¡ç³ŠåŒ–ï¼ˆåŠ æƒå¹³å‡ï¼‰
 float defuzzify(float rule_firings[RULE_NUM], FuzzyParams *params) {
     float numerator = 0.0;
     float denominator = 0.0;
@@ -97,7 +97,7 @@ float defuzzify(float rule_firings[RULE_NUM], FuzzyParams *params) {
         denominator += rule_firings[r];
     }
     
-    // ·ÀÖ¹³ıÁã´íÎó
+    // é˜²æ­¢é™¤é›¶é”™è¯¯
     if (denominator < 1e-6) {
         return 0.0;
     }
@@ -105,7 +105,7 @@ float defuzzify(float rule_firings[RULE_NUM], FuzzyParams *params) {
     return numerator / denominator;
 }
 
-// Ä£ºıÏµÍ³Ç°Ïò´«²¥
+// æ¨¡ç³Šç³»ç»Ÿå‰å‘ä¼ æ’­
 float fuzzy_inference(float inputs[], FuzzyParams *params) {
     float membership_values[INPUT_DIM][MEMBERSHIP_NUM];
     float rule_firings[RULE_NUM];
@@ -116,7 +116,7 @@ float fuzzy_inference(float inputs[], FuzzyParams *params) {
     return defuzzify(rule_firings, params);
 }
 
-// ¼ÆËã¸öÌåÊÊÓ¦¶È£¨Îó²îµÄµ¹Êı£©
+// è®¡ç®—ä¸ªä½“é€‚åº”åº¦ï¼ˆè¯¯å·®çš„å€’æ•°ï¼‰
 float calculate_fitness(Individual *individual, TrainingSample samples[], int sample_count) {
     float error_sum = 0.0;
     
@@ -126,34 +126,34 @@ float calculate_fitness(Individual *individual, TrainingSample samples[], int sa
         error_sum += error * error;
     }
     
-    // ÊÊÓ¦¶ÈÓëÎó²î³É·´±È
+    // é€‚åº”åº¦ä¸è¯¯å·®æˆåæ¯”
     return 1.0 / (1.0 + error_sum / sample_count);
 }
 
-// ³õÊ¼»¯¸öÌå
+// åˆå§‹åŒ–ä¸ªä½“
 void initialize_individual(Individual *individual) {
-    // Ëæ»ú³õÊ¼»¯Á¥Êô¶Èº¯Êı²ÎÊı
+    // éšæœºåˆå§‹åŒ–éš¶å±åº¦å‡½æ•°å‚æ•°
     for (int i = 0; i < INPUT_DIM; i++) {
         for (int m = 0; m < MEMBERSHIP_NUM; m++) {
-            // ÖĞĞÄÖµ¾ùÔÈ·Ö²¼ÔÚÊäÈë·¶Î§ÄÚ
+            // ä¸­å¿ƒå€¼å‡åŒ€åˆ†å¸ƒåœ¨è¾“å…¥èŒƒå›´å†…
             individual->params.membership_params[i][m][0] = -10.0 + 20.0 * (float)m / (MEMBERSHIP_NUM - 1);
-            // ¿í¶ÈËæ»úÔÚ1-3Ö®¼ä
+            // å®½åº¦éšæœºåœ¨1-3ä¹‹é—´
             individual->params.membership_params[i][m][1] = 1.0 + (float)rand() / RAND_MAX * 2.0;
         }
     }
     
-    // Ëæ»ú³õÊ¼»¯¹æÔòÈ¨ÖØ
+    // éšæœºåˆå§‹åŒ–è§„åˆ™æƒé‡
     for (int r = 0; r < RULE_NUM; r++) {
         for (int o = 0; o < OUTPUT_DIM; o++) {
             individual->params.rule_weights[r][o] = -10.0 + (float)rand() / RAND_MAX * 20.0;
         }
     }
     
-    // ³õÊ¼ÊÊÓ¦¶ÈÎª0
+    // åˆå§‹é€‚åº”åº¦ä¸º0
     individual->fitness = 0.0;
 }
 
-// ³õÊ¼»¯ÖÖÈº
+// åˆå§‹åŒ–ç§ç¾¤
 void initialize_population(Population *population) {
     population->individuals = (Individual*)malloc(POPULATION_SIZE * sizeof(Individual));
     population->size = POPULATION_SIZE;
@@ -163,20 +163,20 @@ void initialize_population(Population *population) {
     }
 }
 
-// ¼ÆËãÖÖÈºÖĞËùÓĞ¸öÌåµÄÊÊÓ¦¶È
+// è®¡ç®—ç§ç¾¤ä¸­æ‰€æœ‰ä¸ªä½“çš„é€‚åº”åº¦
 void evaluate_population(Population *population, TrainingSample samples[], int sample_count) {
     for (int i = 0; i < population->size; i++) {
         population->individuals[i].fitness = calculate_fitness(&population->individuals[i], samples, sample_count);
     }
 }
 
-// Ñ¡Ôñ²Ù×÷£¨½õ±êÈüÑ¡Ôñ£©
+// é€‰æ‹©æ“ä½œï¼ˆé”¦æ ‡èµ›é€‰æ‹©ï¼‰
 void tournament_selection(Population *population, Individual *parent1, Individual *parent2) {
     int tournament_size = 3;
     int best_index1 = rand() % population->size;
     float best_fitness1 = population->individuals[best_index1].fitness;
     
-    // µÚÒ»ÂÖ½õ±êÈü
+    // ç¬¬ä¸€è½®é”¦æ ‡èµ›
     for (int i = 1; i < tournament_size; i++) {
         int index = rand() % population->size;
         if (population->individuals[index].fitness > best_fitness1) {
@@ -185,7 +185,7 @@ void tournament_selection(Population *population, Individual *parent1, Individua
         }
     }
     
-    // µÚ¶şÂÖ½õ±êÈü£¨È·±£²»Ñ¡ÔñÍ¬Ò»¸ö¸¸´ú£©
+    // ç¬¬äºŒè½®é”¦æ ‡èµ›ï¼ˆç¡®ä¿ä¸é€‰æ‹©åŒä¸€ä¸ªçˆ¶ä»£ï¼‰
     int best_index2;
     float best_fitness2;
     do {
@@ -205,21 +205,21 @@ void tournament_selection(Population *population, Individual *parent1, Individua
         }
     }
     
-    // ·µ»ØÁ½¸ö×îÓÅ¸öÌå
+    // è¿”å›ä¸¤ä¸ªæœ€ä¼˜ä¸ªä½“
     *parent1 = population->individuals[best_index1];
     *parent2 = population->individuals[best_index2];
 }
 
-// ½»²æ²Ù×÷
+// äº¤å‰æ“ä½œ
 void crossover(Individual *parent1, Individual *parent2, Individual *child1, Individual *child2) {
     if ((float)rand() / RAND_MAX > CROSSOVER_RATE) {
-        // ²»½»²æ£¬Ö±½Ó¸´ÖÆ¸¸´ú
+        // ä¸äº¤å‰ï¼Œç›´æ¥å¤åˆ¶çˆ¶ä»£
         *child1 = *parent1;
         *child2 = *parent2;
         return;
     }
     
-    // ¶ÔÁ¥Êô¶Èº¯Êı²ÎÊı½øĞĞ½»²æ
+    // å¯¹éš¶å±åº¦å‡½æ•°å‚æ•°è¿›è¡Œäº¤å‰
     for (int i = 0; i < INPUT_DIM; i++) {
         for (int m = 0; m < MEMBERSHIP_NUM; m++) {
             for (int p = 0; p < 2; p++) {
@@ -234,7 +234,7 @@ void crossover(Individual *parent1, Individual *parent2, Individual *child1, Ind
         }
     }
     
-    // ¶Ô¹æÔòÈ¨ÖØ½øĞĞ½»²æ
+    // å¯¹è§„åˆ™æƒé‡è¿›è¡Œäº¤å‰
     for (int r = 0; r < RULE_NUM; r++) {
         for (int o = 0; o < OUTPUT_DIM; o++) {
             if ((float)rand() / RAND_MAX > 0.5) {
@@ -247,27 +247,27 @@ void crossover(Individual *parent1, Individual *parent2, Individual *child1, Ind
         }
     }
     
-    // ³õÊ¼ÊÊÓ¦¶ÈÎª0
+    // åˆå§‹é€‚åº”åº¦ä¸º0
     child1->fitness = 0.0;
     child2->fitness = 0.0;
 }
 
-// ±äÒì²Ù×÷
+// å˜å¼‚æ“ä½œ
 void mutate(Individual *individual) {
-    // ¶ÔÁ¥Êô¶Èº¯Êı²ÎÊı½øĞĞ±äÒì
+    // å¯¹éš¶å±åº¦å‡½æ•°å‚æ•°è¿›è¡Œå˜å¼‚
     for (int i = 0; i < INPUT_DIM; i++) {
         for (int m = 0; m < MEMBERSHIP_NUM; m++) {
             for (int p = 0; p < 2; p++) {
                 if ((float)rand() / RAND_MAX < MUTATION_RATE) {
-                    // Ìí¼ÓËæ»úÈÅ¶¯
+                    // æ·»åŠ éšæœºæ‰°åŠ¨
                     float perturbation = (float)rand() / RAND_MAX * 2.0 - 1.0;
                     individual->params.membership_params[i][m][p] += perturbation;
                     
-                    // È·±£²ÎÊıÔÚºÏÀí·¶Î§ÄÚ
-                    if (p == 0) {  // ÖĞĞÄÖµ
+                    // ç¡®ä¿å‚æ•°åœ¨åˆç†èŒƒå›´å†…
+                    if (p == 0) {  // ä¸­å¿ƒå€¼
                         individual->params.membership_params[i][m][p] = 
                             fmax(-15.0, fmin(15.0, individual->params.membership_params[i][m][p]));
-                    } else {  // ¿í¶È
+                    } else {  // å®½åº¦
                         individual->params.membership_params[i][m][p] = 
                             fmax(0.5, fmin(5.0, individual->params.membership_params[i][m][p]));
                     }
@@ -276,14 +276,14 @@ void mutate(Individual *individual) {
         }
     }
     
-    // ¶Ô¹æÔòÈ¨ÖØ½øĞĞ±äÒì
+    // å¯¹è§„åˆ™æƒé‡è¿›è¡Œå˜å¼‚
     for (int r = 0; r < RULE_NUM; r++) {
         for (int o = 0; o < OUTPUT_DIM; o++) {
             if ((float)rand() / RAND_MAX < MUTATION_RATE) {
                 float perturbation = (float)rand() / RAND_MAX * 4.0 - 2.0;
                 individual->params.rule_weights[r][o] += perturbation;
                 
-                // È·±£È¨ÖØÔÚºÏÀí·¶Î§ÄÚ
+                // ç¡®ä¿æƒé‡åœ¨åˆç†èŒƒå›´å†…
                 individual->params.rule_weights[r][o] = 
                     fmax(-15.0, fmin(15.0, individual->params.rule_weights[r][o]));
             }
@@ -291,11 +291,11 @@ void mutate(Individual *individual) {
     }
 }
 
-// ¾«Ó¢±£Áô
+// ç²¾è‹±ä¿ç•™
 void elitism(Population *old_pop, Population *new_pop) {
     int elite_count = (int)(POPULATION_SIZE * ELITISM_RATE);
     
-    // ¶Ô¾ÉÖÖÈº°´ÊÊÓ¦¶ÈÅÅĞò
+    // å¯¹æ—§ç§ç¾¤æŒ‰é€‚åº”åº¦æ’åº
     for (int i = 0; i < old_pop->size - 1; i++) {
         for (int j = i + 1; j < old_pop->size; j++) {
             if (old_pop->individuals[i].fitness < old_pop->individuals[j].fitness) {
@@ -306,44 +306,44 @@ void elitism(Population *old_pop, Population *new_pop) {
         }
     }
     
-    // ¸´ÖÆ¾«Ó¢¸öÌåµ½ĞÂÖÖÈº
+    // å¤åˆ¶ç²¾è‹±ä¸ªä½“åˆ°æ–°ç§ç¾¤
     for (int i = 0; i < elite_count; i++) {
         new_pop->individuals[i] = old_pop->individuals[i];
     }
 }
 
-// Ìæ»»¾ÉÖÖÈº
+// æ›¿æ¢æ—§ç§ç¾¤
 void replace_population(Population *old_pop, Population *new_pop) {
     elitism(old_pop, new_pop);
     
     int elite_count = (int)(POPULATION_SIZE * ELITISM_RATE);
     
-    // Éú³ÉÊ£Óà¸öÌå
+    // ç”Ÿæˆå‰©ä½™ä¸ªä½“
     for (int i = elite_count; i < POPULATION_SIZE; i += 2) {
         Individual parent1, parent2, child1, child2;
         
-        // Ñ¡Ôñ¸¸´ú
+        // é€‰æ‹©çˆ¶ä»£
         tournament_selection(old_pop, &parent1, &parent2);
         
-        // ½»²æ
+        // äº¤å‰
         crossover(&parent1, &parent2, &child1, &child2);
         
-        // ±äÒì
+        // å˜å¼‚
         mutate(&child1);
         mutate(&child2);
         
-        // Ìí¼Óµ½ĞÂÖÖÈº
+        // æ·»åŠ åˆ°æ–°ç§ç¾¤
         new_pop->individuals[i] = child1;
         if (i + 1 < POPULATION_SIZE) {
             new_pop->individuals[i + 1] = child2;
         }
     }
     
-    // ÊÍ·Å¾ÉÖÖÈºÄÚ´æ
+    // é‡Šæ”¾æ—§ç§ç¾¤å†…å­˜
     free(old_pop->individuals);
 }
 
-// ÕÒµ½×îÓÅ¸öÌå
+// æ‰¾åˆ°æœ€ä¼˜ä¸ªä½“
 Individual* find_best_individual(Population *population) {
     float best_fitness = -1.0;
     Individual *best_individual = NULL;
@@ -358,61 +358,61 @@ Individual* find_best_individual(Population *population) {
     return best_individual;
 }
 
-// Éú³ÉÊ¾ÀıÑµÁ·Êı¾İ
-void generate_training_data(TrainingSample samples[], int count) {   //ÊäÈëÊı×é
+// ç”Ÿæˆç¤ºä¾‹è®­ç»ƒæ•°æ®
+void generate_training_data(TrainingSample samples[], int count) {   //è¾“å…¥æ•°ç»„
   
-    // Ä£Äâ·§ÃÅ¿ØÖÆ×¨¼ÒµÄ¾ö²ß¹æÔò
+    // æ¨¡æ‹Ÿé˜€é—¨æ§åˆ¶ä¸“å®¶çš„å†³ç­–è§„åˆ™
     for (int i = 0; i < count; i++) {
       
-        // Éú³ÉËæ»úÊäÈë£¨Îó²îºÍÎó²î±ä»¯ÂÊ£©
-        samples[i].inputs[0] = (float)rand() / RAND_MAX * 20.0 - 10.0;  // Îó²î: [-10, 10]
-        samples[i].inputs[1] = (float)rand() / RAND_MAX * 10.0 - 5.0;   // Îó²î±ä»¯ÂÊ: [-5, 5]
+        // ç”Ÿæˆéšæœºè¾“å…¥ï¼ˆè¯¯å·®å’Œè¯¯å·®å˜åŒ–ç‡ï¼‰
+        samples[i].inputs[0] = (float)rand() / RAND_MAX * 20.0 - 10.0;  // è¯¯å·®: [-10, 10]
+        samples[i].inputs[1] = (float)rand() / RAND_MAX * 10.0 - 5.0;   // è¯¯å·®å˜åŒ–ç‡: [-5, 5]
         
         float error = samples[i].inputs[0];
         float error_rate = samples[i].inputs[1];
         
-        // »ùÓÚ×¨¼ÒÖªÊ¶µÄÄ¿±êÊä³ö£¨Ä£Äâ·§ÃÅ¿ØÖÆ²ßÂÔ£©
+        // åŸºäºä¸“å®¶çŸ¥è¯†çš„ç›®æ ‡è¾“å‡ºï¼ˆæ¨¡æ‹Ÿé˜€é—¨æ§åˆ¶ç­–ç•¥ï¼‰
         float target = 0.0;
         
         if (error > 5) {
             if (error_rate > 2) {
-                target = 8.0;  // Õı´ó
+                target = 8.0;  // æ­£å¤§
             } else if (error_rate < -2) {
-                target = 6.0;  // ÕıÖĞ
+                target = 6.0;  // æ­£ä¸­
             } else {
-                target = 7.0;  // Õı½Ï´ó
+                target = 7.0;  // æ­£è¾ƒå¤§
             }
         } else if (error > 1) {
             if (error_rate > 2) {
-                target = 6.0;  // ÕıÖĞ
+                target = 6.0;  // æ­£ä¸­
             } else if (error_rate < -2) {
-                target = 4.0;  // ÕıĞ¡
+                target = 4.0;  // æ­£å°
             } else {
-                target = 5.0;  // ÕıÖĞĞ¡
+                target = 5.0;  // æ­£ä¸­å°
             }
         } else if (error > -1) {
             if (error_rate > 2) {
-                target = 2.0;  // ¸ºĞ¡
+                target = 2.0;  // è´Ÿå°
             } else if (error_rate < -2) {
-                target = 4.0;  // ÕıĞ¡
+                target = 4.0;  // æ­£å°
             } else {
-                target = 3.0;  // Áã
+                target = 3.0;  // é›¶
             }
         } else if (error > -5) {
             if (error_rate > 2) {
-                target = -4.0;  // ¸ºĞ¡
+                target = -4.0;  // è´Ÿå°
             } else if (error_rate < -2) {
-                target = -6.0;  // ¸ºÖĞ
+                target = -6.0;  // è´Ÿä¸­
             } else {
-                target = -5.0;  // ¸ºÖĞĞ¡
+                target = -5.0;  // è´Ÿä¸­å°
             }
         } else {
             if (error_rate > 2) {
-                target = -6.0;  // ¸ºÖĞ
+                target = -6.0;  // è´Ÿä¸­
             } else if (error_rate < -2) {
-                target = -8.0;  // ¸º´ó
+                target = -8.0;  // è´Ÿå¤§
             } else {
-                target = -7.0;  // ¸º½Ï´ó
+                target = -7.0;  // è´Ÿè¾ƒå¤§
             }
         }
         
@@ -421,17 +421,17 @@ void generate_training_data(TrainingSample samples[], int count) {   //ÊäÈëÊı×é
     }
 }
 
-// ´òÓ¡Ä£ºı¹æÔò
+// æ‰“å°æ¨¡ç³Šè§„åˆ™
 void print_fuzzy_rules(FuzzyParams *params) {
-    const char *error_labels[MEMBERSHIP_NUM] = {"¸º", "Áã", "Õı"};
-    const char *error_rate_labels[MEMBERSHIP_NUM] = {"¸º", "Áã", "Õı"};
+    const char *error_labels[MEMBERSHIP_NUM] = {"è´Ÿ", "é›¶", "æ­£"};
+    const char *error_rate_labels[MEMBERSHIP_NUM] = {"è´Ÿ", "é›¶", "æ­£"};
     
-//    printf("\nÓÅ»¯ºóµÄÄ£ºı¹æÔò±í:\n");
+//    printf("\nä¼˜åŒ–åçš„æ¨¡ç³Šè§„åˆ™è¡¨:\n");
     int rule_index = 0;
     
     for (int m1 = 0; m1 < MEMBERSHIP_NUM; m1++) {
         for (int m2 = 0; m2 < MEMBERSHIP_NUM; m2++) {
-            printf("¹æÔò %d: Èç¹û Îó²îÊÇ%sÇÒÎó²î±ä»¯ÂÊÊÇ%s, Ôò Êä³ö = %.2f\n",
+            printf("è§„åˆ™ %d: å¦‚æœ è¯¯å·®æ˜¯%sä¸”è¯¯å·®å˜åŒ–ç‡æ˜¯%s, åˆ™ è¾“å‡º = %.2f\n",
                    rule_index + 1,
                    error_labels[m1],
                    error_rate_labels[m2],
@@ -440,13 +440,13 @@ void print_fuzzy_rules(FuzzyParams *params) {
         }
     }
     
-    printf("\nÁ¥Êô¶Èº¯Êı²ÎÊı:\n");
+    printf("\néš¶å±åº¦å‡½æ•°å‚æ•°:\n");
     for (int i = 0; i < INPUT_DIM; i++) {
-        const char *input_names[INPUT_DIM] = {"Îó²î", "Îó²î±ä»¯ÂÊ"};
-//        printf("ÊäÈë %s µÄÁ¥Êô¶Èº¯Êı²ÎÊı:\n", input_names[i]);
+        const char *input_names[INPUT_DIM] = {"è¯¯å·®", "è¯¯å·®å˜åŒ–ç‡"};
+//        printf("è¾“å…¥ %s çš„éš¶å±åº¦å‡½æ•°å‚æ•°:\n", input_names[i]);
         
         for (int m = 0; m < MEMBERSHIP_NUM; m++) {
-//            printf("  %s%d: ÖĞĞÄ=%.2f, ¿í¶È=%.2f\n",
+//            printf("  %s%d: ä¸­å¿ƒ=%.2f, å®½åº¦=%.2f\n",
 //                   error_labels[m], m,
 //                   params->membership_params[i][m][0],
 //                   params->membership_params[i][m][1]);
@@ -457,55 +457,55 @@ void print_fuzzy_rules(FuzzyParams *params) {
 
 void Fuzzy_Control(void ){
   
-       // ³õÊ¼»¯Ëæ»úÊıÖÖ×Ó
+       // åˆå§‹åŒ–éšæœºæ•°ç§å­
     srand(time(NULL));
     
-    // ´´½¨ÑµÁ·Êı¾İ
+    // åˆ›å»ºè®­ç»ƒæ•°æ®
     TrainingSample samples[TRAINING_SAMPLES];
     
-    generate_training_data(samples, TRAINING_SAMPLES);    //ÊäÈëÑù±¾£¬²ÉÑùÊı1oo
+    generate_training_data(samples, TRAINING_SAMPLES);    //è¾“å…¥æ ·æœ¬ï¼Œé‡‡æ ·æ•°1oo
     
-    // ³õÊ¼»¯ÖÖÈº
+    // åˆå§‹åŒ–ç§ç¾¤
     Population population;
     initialize_population(&population);
     
-    // ÆÀ¹À³õÊ¼ÖÖÈº
+    // è¯„ä¼°åˆå§‹ç§ç¾¤
     evaluate_population(&population, samples, TRAINING_SAMPLES);
     
-    printf("ÒÅ´«Ëã·¨ÓÅ»¯Ä£ºı¹æÔò±í...\n"); 
-    // ÒÅ´«Ëã·¨Ö÷Ñ­»·
+    printf("é—ä¼ ç®—æ³•ä¼˜åŒ–æ¨¡ç³Šè§„åˆ™è¡¨...\n"); 
+    // é—ä¼ ç®—æ³•ä¸»å¾ªç¯
     for (int gen = 0; gen < GENERATIONS; gen++) {
-        // ´´½¨ĞÂÖÖÈº
+        // åˆ›å»ºæ–°ç§ç¾¤
         Population new_pop;
         new_pop.individuals = (Individual*)malloc(POPULATION_SIZE * sizeof(Individual));
         new_pop.size = POPULATION_SIZE;
         
-        // Ìæ»»ÖÖÈº
+        // æ›¿æ¢ç§ç¾¤
         replace_population(&population, &new_pop);
         
-        // ÆÀ¹ÀĞÂÖÖÈº
+        // è¯„ä¼°æ–°ç§ç¾¤
         evaluate_population(&new_pop, samples, TRAINING_SAMPLES);
         
-        // ¸üĞÂµ±Ç°ÖÖÈº
+        // æ›´æ–°å½“å‰ç§ç¾¤
         population = new_pop;
         
-        // ´òÓ¡½ø¶È
+        // æ‰“å°è¿›åº¦
         if (gen % 10 == 0) {
             Individual *best = find_best_individual(&population);
-//            printf("´úÊı %d, ×î¼ÑÊÊÓ¦¶È = %.4f, Îó²î = %.4f\n", 
+//            printf("ä»£æ•° %d, æœ€ä½³é€‚åº”åº¦ = %.4f, è¯¯å·® = %.4f\n", 
 //                   gen, best->fitness, 1.0/best->fitness - 1.0);
         }
     }
     
-    // ÕÒµ½×îÓÅ¸öÌå
+    // æ‰¾åˆ°æœ€ä¼˜ä¸ªä½“
     Individual *best = find_best_individual(&population);
     
-    // ´òÓ¡ÓÅ»¯ºóµÄÄ£ºı¹æÔò
+    // æ‰“å°ä¼˜åŒ–åçš„æ¨¡ç³Šè§„åˆ™
     print_fuzzy_rules(&best->params);
     
-    // ²âÊÔÓÅ»¯ºóµÄÄ£ºıÏµÍ³
-//    printf("\n²âÊÔÓÅ»¯ºóµÄÄ£ºıÏµÍ³:\n");
-//    printf("Îó²î\tÎó²î±ä»¯ÂÊ\tÄ¿±êÊä³ö\tÊµ¼ÊÊä³ö\tÎó²î\n");
+    // æµ‹è¯•ä¼˜åŒ–åçš„æ¨¡ç³Šç³»ç»Ÿ
+//    printf("\næµ‹è¯•ä¼˜åŒ–åçš„æ¨¡ç³Šç³»ç»Ÿ:\n");
+//    printf("è¯¯å·®\tè¯¯å·®å˜åŒ–ç‡\tç›®æ ‡è¾“å‡º\tå®é™…è¾“å‡º\tè¯¯å·®\n");
     
     for (int i = 0; i < 10; i++) {
         int index = rand() % TRAINING_SAMPLES;
@@ -520,7 +520,7 @@ void Fuzzy_Control(void ){
 //               error);
     }
     
-    // ÊÍ·ÅÄÚ´æ
+    // é‡Šæ”¾å†…å­˜
 //    free(population.individuals);  
   
   
