@@ -118,7 +118,7 @@ extern void wave_formPAR(void);
 extern void changePWMduty(void);
 extern void calculateKpKiKd(void);
 extern void P1_2_Rdj_H(void);
-extern void P1_2_Rdj(void);
+/* extern void P1_2_Rdj(void); 无调用，定义已用 #if 0 关掉 */
 extern void RunControl(void);
 extern void SAVE_FLH(  unsigned int tmp );
 

@@ -32,6 +32,8 @@ unsigned char g_verify_step = 0;        //0=初始化, 1~6=阶跃步, 7=结束
 unsigned int  g_verify_peak = 0;        //当前阶跃的峰值
 unsigned int  g_verify_stable_cnt = 0;  //稳定计数器
 unsigned int  g_verify_time_cnt = 0;    //单步计时器(20ms/tick, 200=4s)
+unsigned int  g_verify_k3_base = 0;     //进入STP_10时的5.3，欠调累计加幅不超过150
+unsigned int  g_verify_k4_base = 0;     //进入STP_10时的5.4，欠调累计加幅不超过150
 
 
 
@@ -1439,7 +1441,7 @@ void P1_2_Rdj_H(void)
     {//超时报警
       OutPut_Positive(0);
       VAL.V_p1_3BRND = V_p1_3 ;//恢复1.3   20220515
-      SYS.bit.Step = SP_OK;
+      SYS.bit.Step = STP_10;
       return;   //极限位置无法确定
     }            
   }break;         
@@ -1453,11 +1455,22 @@ void P1_2_Rdj_H(void)
     Rdj_times += 1;
     ADC12_Convert(1);
 
+    if(Rdj_times > 4000) {   //STP_10总超时40s兜底(正常全程<=28s)，异常时强制结束
+      OutPut_Positive(0);
+      g_verify_step = 0;
+      g_verify_stable_cnt = 0;
+      g_verify_time_cnt = 0;
+      SYS.bit.Step = SP_OK;
+      break;
+    }
+
     if(g_verify_step == 0) {   //先回0%并稳定
       if(Rdj_times <= 5) {
         g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
         g_verify_stable_cnt = 0;
         g_verify_time_cnt = 0;
+        g_verify_k3_base = VAL.V_p5_3__K3;
+        g_verify_k4_base = VAL.V_p5_4__K4;
         VAL.V_p1_3BRND = V_p1_3;
         g_PIDServiceData.SetPoint = 0;
       }
@@ -1499,10 +1512,22 @@ void P1_2_Rdj_H(void)
     }
 
     if(g_verify_stable_cnt >= 100 || g_verify_time_cnt >= 200) {   //速度变小稳定2s 或 超时4s，判定该阶跃
-      if(g_verify_step >= 1 && g_verify_step <= 3) {          //上行 0.3%超调(SetPoint+3)
-        if(g_verify_peak > g_PIDServiceData.SetPoint + 3) VAL.V_p2_6_TUP += 5;
-      } else if(g_verify_step >= 4 && g_verify_step <= 5) {   //下行 0.3%超调(SetPoint-3)
-        if(g_verify_peak < g_PIDServiceData.SetPoint - 3) VAL.V_p2_7_TDN += 5;
+      if(g_verify_step >= 1 && g_verify_step <= 3) {          //上行，阈值±3(0.3%)
+        if(g_verify_peak > g_PIDServiceData.SetPoint + 3) {
+          VAL.V_p2_6_TUP += 5;                                //超调：2.6 +5
+        } else if(g_verify_peak < g_PIDServiceData.SetPoint - 3) {
+          if(VAL.V_p5_3__K3 + 50 <= g_verify_k3_base + 150) { //欠调：5.3 +50，本次累计<=150
+            VAL.V_p5_3__K3 += 50;
+          }
+        }
+      } else if(g_verify_step >= 4 && g_verify_step <= 5) {   //下行，阈值±3(0.3%)
+        if(g_verify_peak < g_PIDServiceData.SetPoint - 3) {
+          VAL.V_p2_7_TDN += 5;                                //超调：2.7 +5
+        } else if(g_verify_peak > g_PIDServiceData.SetPoint + 3) {
+          if(VAL.V_p5_4__K4 + 50 <= g_verify_k4_base + 150) { //欠调：5.4 +50，本次累计<=150
+            VAL.V_p5_4__K4 += 50;
+          }
+        }
       }
       g_verify_step++;
       g_verify_stable_cnt = 0;
@@ -1558,6 +1583,8 @@ ERR:
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
+/* P1_2_Rdj 无调用：main / Config_IP / Quick_IP 实际都走 P1_2_Rdj_H */
+#if 0
 void P1_2_Rdj(void)
 { 
  
@@ -2775,6 +2802,15 @@ void P1_2_Rdj(void)
     Rdj_times += 1;
     ADC12_Convert(1);
 
+    if(Rdj_times > 2000) {   //STP_10总超时40s兜底(正常全程<=28s)，异常时强制结束
+      OutPut_Positive(0);
+      g_verify_step = 0;
+      g_verify_stable_cnt = 0;
+      g_verify_time_cnt = 0;
+      SYS.bit.Step = SP_OK;
+      break;
+    }
+
     if(g_verify_step == 0) {   //先回0%并稳定
       if(Rdj_times <= 5) {
         g_verify_peak = g_PIDServiceData.Cur_ValvePoint;
@@ -2874,6 +2910,7 @@ void P1_2_Rdj(void)
   }   
 ERR:   
 }
+#endif
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////PID自整定相关函数/////////////////////////////////////////////

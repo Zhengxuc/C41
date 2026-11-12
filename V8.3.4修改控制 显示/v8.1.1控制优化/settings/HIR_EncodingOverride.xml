@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<userOverrides>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\AD421.cpp</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\AD421.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Ad.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Alarm.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Alarm.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\CurveFitting.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\CurveFitting.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\DS18B20.c</path>
+        <encoding>GB2312</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\DWQcontrol.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Device.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\DisDataCalculate.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\DisDataCalculate.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Dis_lib.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\FittingData.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Flash_RW.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Flash_RW.cpp</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Fuzzy.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Fuzzy.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\HT1621.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\HT1621.cpp</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Hart.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\IP_Control.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\IP_Control.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\KEYBOARD.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\KEYBOARD.cpp</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Limited.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\MessageCenter.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\MessageCenter.cpp</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Pwm.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Pwm.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\RunAuto.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\RunAuto.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\RunAutoH.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\RunConfig.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\RunConfig.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\RunConfigH.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\RunMen.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\RunMen.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Tick.H</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Tick.cpp</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Uart.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\Uart.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\ad.cpp</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\delay.cpp</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\delay.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\hart.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\main.c</path>
+        <encoding>UTF-8</encoding>
+    </override>
+    <override>
+        <path>D:\work\code\最新C41交付的版本\V8.3.4修改控制 显示\v8.1.1控制优化\math.h</path>
+        <encoding>UTF-8</encoding>
+    </override>
+</userOverrides>

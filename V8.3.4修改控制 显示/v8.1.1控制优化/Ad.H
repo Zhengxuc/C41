@@ -19,15 +19,23 @@
 #define FALSE 0
 
 //DS18B20
-#define IO_18B20_Out     P1DIR |=BIT7  
-#define IO_18B20_In      P1DIR &=~BIT7
-#define DQ1             P1OUT |=BIT7
-#define DQ0             P1OUT &=~BIT7
-#define Read_18B20_IO   P1IN & BIT7
+//#define IO_18B20_Out     P1DIR |=BIT7  
+//#define IO_18B20_In      P1DIR &=~BIT7
+//#define DQ1             P1OUT |=BIT7
+//#define DQ0             P1OUT &=~BIT7
+//#define Read_18B20_IO   P1IN & BIT7
 
+// ===== 全局延时，保持原样，别的模块继续用 =====
 #define CPU_F ((double)3000000)
-#define delay_us(x) __delay_cycles((long)(CPU_F*(double)x/1000000.0)) 
+#define delay_us(x) __delay_cycles((long)(CPU_F*(double)x/1000000.0))
 #define delay_ms(x) __delay_cycles((long)(CPU_F*(double)x/1000.0))
+
+// ===== DS18B20 专用延时，单独系数 =====
+// 实测 100us 实际 92.15us，反推系数 3.26MHz
+#define DS_CPU_F ((double)3260000)
+#define DS18B20_delay_us(x) __delay_cycles((long)(DS_CPU_F*(double)x/1000000.0))
+//为防止修改其他模块的延时而特意做的
+
 
 extern unsigned int Initdata[4];
 extern unsigned char Temp_error_flag;
@@ -64,11 +72,12 @@ typedef struct                     //---- 这个结构体有点太大了
     float opening_back;//开度反馈
     float IP_Current_Out;//IP电流值
     float IP_Current_Percent;//IP电流值百分比
+    double      Voltage  ; 
 }AD_REG;
 
 extern void ADC12_Initial(void);
 extern void ADC12_Convert( unsigned char mode );
 extern void ack ();
-short Get_Temp(void);
+void Temp_Process(void);  /* 非阻塞读温，主循环每次调用 */
 //-------------------------------------------------------------------------------------------------
 #endif

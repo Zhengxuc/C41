@@ -287,157 +287,192 @@ void ADC12_Convert( unsigned char mode )
    
    }
 }
-/*
-①单片机拉低这个引脚，持续480~960us (以持续500us为例)
-②单片机释放总线，即拉高电平。
-③15 ~60us后，如果DS18B20这个器件存在，就会主动拉低这个引脚，返回一个低脉冲（为了确保读到这个脉冲，选择延时60us,但不能超过75us）
-④持续60 ~240us后，DS18B20释放总线，I0端口被上拉电阻拉高。
-————————————————
-版权声明：本文为CSDN博主「PCONST」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/m0_50620305/article/details/113976976
-*/
-//DS18B20驱动
+/* DS18B20 单总线驱动（开漏 + 外部 4.7k 上拉到 3V）
+ * 空闲：切输入，由上拉拉高；主机只主动拉低，不主动与从机抢高
+ * Temp_Process() 非阻塞；AD.Temperature = 实际温度 * 10
+ * DS18B20_init()：0=有器件，1=无应答
+ */
 unsigned char DS18B20_init(void)
 {
-    unsigned char i = 2;
+    unsigned char presence;
+
+    P1SEL &= ~BIT7;              /* 确保普通 GPIO */
     IO_18B20_Out;
-    DQ1;             //先上拉电平打断初始化之前的操作
-    DQ0;             //拉低电平等待响应
-    delay_us(520);
-    DQ1;
-    delay_us(15);
-    IO_18B20_In;
-    delay_us(80);  
-    if(P1IN & BIT7){i=1;IO_18B20_Out;} 
-    else{i=0;IO_18B20_Out;} //如果是低电平，则初始化成功
-    delay_us(300);
-    return i;
+    DQ0;
+    DS18B20_delay_us(550);       /* 复位拉低 >=480us */
+
+    IO_18B20_In;                 /* 释放，靠上拉变高 */
+    DS18B20_delay_us(70);        /* 存在脉冲窗口内采样(约15~60us起) */
+
+    presence = (Read_18B20_IO == 0) ? 0 : 1;  /* 低=有器件 */
+
+    DS18B20_delay_us(410);       /* 等存在脉冲结束，空闲保持输入+上拉 */
+    return presence;
 }
 
-//发送一个字节的命令
-void send_byte(unsigned char cmd) 
-{ 
-   unsigned char num=0;
-   unsigned char testb=0;
-    for(num=0;num<8;num++){  //进行循环以发送每一位的数据
-      IO_18B20_Out;
-      DQ0;
-      delay_us(8);
-      if(cmd & 0x01){DQ1;}
-      delay_us(60);
-      DQ1;
-      cmd >>= 1;
-        
+static void write_bit(unsigned char b)
+{
+    IO_18B20_Out;
+    DQ0;
+    if (b) {
+        DS18B20_delay_us(6);     /* 写1：拉低 <15us */
+        IO_18B20_In;             /* 释放，上拉拉高 */
+        DS18B20_delay_us(64);    /* 时隙 >=60us */
+    } else {
+        DS18B20_delay_us(60);    /* 写0：拉低 >=60us */
+        IO_18B20_In;             /* 释放 */
+        DS18B20_delay_us(10);    /* 恢复时间 >1us */
     }
-
 }
 
-  
+static unsigned char read_bit(void)
+{
+    unsigned char b;
 
+    IO_18B20_Out;
+    DQ0;
+    DS18B20_delay_us(2);         /* 拉低 >1us 启动读时隙 */
+    IO_18B20_In;                 /* 立刻释放，勿 DQ1，避免与从机拉低冲突 */
+    DS18B20_delay_us(10);        /* 采样点约 12us，须在 15us 内 */
+    b = (Read_18B20_IO != 0);
+    DS18B20_delay_us(55);        /* 凑满时隙，空闲由上拉保持高 */
+    return b;
+}
 
-//读取一个字节
+void send_byte(unsigned char cmd)
+{
+    unsigned char num;
+    for (num = 0; num < 8; num++) {
+        write_bit(cmd & 0x01);
+        cmd >>= 1;
+    }
+}
+
 unsigned char read_byte(void)
-{   
+{
     unsigned char i;
-    unsigned char data=0;
-    for(i=0;i<8;i++){
-       data>>=1;         //右移，读取下一位
-       DQ0;
-       delay_us(5);
-       DQ1;      
-       delay_us(8);
-       IO_18B20_In;
-       _NOP();
-       if(P1IN & BIT7){data|=0x80;} 
-       delay_us(50);
-       IO_18B20_Out;
-       DQ1;
-       delay_us(10);
+    unsigned char data = 0;
+    for (i = 0; i < 8; i++) {
+        data >>= 1;
+        if (read_bit()) {
+            data |= 0x80;
+        }
     }
     return data;
 }
 
+int ucNeFlg = 0; /* 负温度标志，供其它模块使用 */
 
-   int ucNeFlg=0; /*定义达拉斯测试是否为负温度标准*/
-//读取操作进行两次并将结果合并
 short read_temp(void)
-{     
-    unsigned char low=0;
-    unsigned char high=0;
-    int               t1=0;    /*温度整数部分的值*/
-    unsigned char     t2=0;   /*温度小数部分的值*/
-    short    wData=0;
-    
-    char  ucTemph,ucTempl;
-    float    ucfloat;
-    low = read_byte();
-    high= read_byte();
-    
-    if(low==0xff && high==0xff)
-    {
+{
+    unsigned char low;
+    unsigned char high;
+    short raw;
+    short wData;
+
+    low  = read_byte();
+    high = read_byte();
+
+    /* 总线异常/未接时常读到 0xFFFF */
+    if (low == 0xFF && high == 0xFF) {
+        Temp_error_flag = 1;
         return AD.Last_Temperature;
     }
-    
-    ucTemph=high;
-    ucTempl=low;
-    
-    if((high&0xF0)>0)
-    { //判断是否为负温度
-      ucNeFlg=1;   //
-    }
-    else
-    {
-      ucNeFlg=0;
-    }
-    
-    if(ucNeFlg)
-    { //如果为负温度取反加1
-      ucTempl=~ucTempl+1;
-      ucTemph=~ucTemph+(!ucTempl?1:0);
-    }
-    
-    
-    t1=ucTemph<<4; //得到温度整数部分
-    t1|=(ucTempl>>4);
-    ucfloat =(float)(ucTempl&0x0F);
-    ucfloat *=0.625;	
-    t2 = (unsigned char)ucfloat;
-    wData = t1*10+t2;
-    
-    if(ucNeFlg)
-    { 
-      //wData=~wData+1;
-      return - wData;   //
-    
-    }
-    else
-      return wData;
+
+    raw = (short)(((unsigned short)high << 8) | low);
+    ucNeFlg = (raw < 0) ? 1 : 0;
+
+    /* raw 单位 1/16℃，*10/16 => 温度*10；四舍五入 */
+    wData = (short)((raw * 10 + (raw >= 0 ? 8 : -8)) / 16);
+
+    Temp_error_flag = 0;
+    AD.Last_Temperature = wData;
+    return wData;
 }
 
-//向18B20发送跳过ROM命令
-void skip(void){         
-   send_byte(0xcc);
+void skip(void)
+{
+    send_byte(0xCC);
 }
 
-//温度转换命令
-void Temp_convert(void){
-   send_byte(0x44);      
+void Temp_convert(void)
+{
+    send_byte(0x44);
 }
 
-//读取ScratchPad命令
-void read_sp(void){     
-   send_byte(0xbe);
+void read_sp(void)
+{
+    send_byte(0xBE);
 }
 
-//做一次转换
-short Get_Temp(void)
-{         
-    DS18B20_init();  //初始化
-    skip();                 //跳过ROM
-    Temp_convert();                   //转换
-    delay_ms(750);          //转换时延时，12位精度最少需要750ms
-    DS18B20_init();   //初始化
-    skip();                 //跳过ROM命令
-    read_sp();              //读取数据 
-    return read_temp();     //返回数据为实际温度*10
+/* 非阻塞读温状态机：启动转换后立刻返回，约1s后再取结果，不堵主循环 */
+#define TEMP_ST_IDLE   0
+#define TEMP_ST_WAIT   1
+
+static unsigned char temp_state = TEMP_ST_IDLE;
+static unsigned int  temp_start_tick = 0;
+
+static unsigned char Temp_StartConvert(void)
+{
+    _DINT();
+    if (DS18B20_init() != 0) {
+        _EINT();
+        Temp_error_flag = 1;
+        return 0;
+    }
+    skip();
+    Temp_convert();
+    _EINT();
+    return 1;
+}
+
+static short Temp_ReadResult(void)
+{
+    short t;
+
+    _DINT();
+    if (DS18B20_init() != 0) {
+        _EINT();
+        Temp_error_flag = 1;
+        return AD.Last_Temperature;
+    }
+    skip();
+    read_sp();
+    t = read_temp();
+    _EINT();
+    return t;
+}
+
+/* 主循环每次调用；Flag_Temp 置位时启动转换，等待期满后更新 AD.Temperature */
+void Temp_Process(void)
+{
+    unsigned int elapsed;
+    unsigned int wait_ticks;
+
+    if (temp_state == TEMP_ST_IDLE) {
+        if (Flag_Temp == 0) {
+            return;
+        }
+        Flag_Temp = 0;
+        if (Temp_StartConvert() == 0) {
+            return;
+        }
+        temp_start_tick = CLK.TempTimer;
+        temp_state = TEMP_ST_WAIT;
+        return;
+    }
+
+    /* TEMP_ST_WAIT：等满约 1s（覆盖 DS18B20 12 位 750ms 转换） */
+    wait_ticks = CLK.Second_modulate;
+    if (wait_ticks < 40) {
+        wait_ticks = 40;
+    }
+
+    elapsed = (CLK.TempTimer - temp_start_tick) & 0x0FFF;
+    if (elapsed < wait_ticks) {
+        return;
+    }
+
+    AD.Temperature = Temp_ReadResult();
+    temp_state = TEMP_ST_IDLE;
 }

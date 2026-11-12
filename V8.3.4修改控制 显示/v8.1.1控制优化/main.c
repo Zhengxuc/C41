@@ -308,7 +308,10 @@ void main( void )
          {
            Flag_Display = 0; 
          }
-              
+
+         Temp_Process();  /* 非阻塞：到点启动/取温，不空等850ms */
+         
+
          
           if(CLK.received ==0)
           {

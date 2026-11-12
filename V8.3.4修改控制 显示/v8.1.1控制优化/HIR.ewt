@@ -2140,6 +2140,12 @@
         <name>$PROJ_DIR$\DisDataCalculate.H</name>
     </file>
     <file>
+        <name>$PROJ_DIR$\DS18B20.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\DS18B20.h</name>
+    </file>
+    <file>
         <name>$PROJ_DIR$\FittingData.H</name>
     </file>
     <file>

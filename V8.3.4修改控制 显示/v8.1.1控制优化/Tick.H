@@ -28,6 +28,7 @@ typedef struct TICK_BITS
     unsigned int received           : 2; // 接收到一
     unsigned int SecHT              : 5; //20151010add hart    
     unsigned int Time_Cnt_Hart         ; //hart时间计数器
+    unsigned int TempTimer            :12;
    
 
 }TICK_REG;
@@ -37,6 +38,7 @@ extern int Flag_Adc;
 
 extern int Flag_Message ;
 extern int Flag_Display ;
+extern int Flag_Temp;
 //------------------------------------------------------------------------------
 extern void Cpu_Tick_Initial( void );
 //------------------------------------------------------------------------------

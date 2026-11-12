@@ -24,7 +24,7 @@
 
 # include  "IP_Control.h"
 #include "Fuzzy.h"
-
+#include "DS18B20.h"
 
 #include <string.h>
 #include <time.h>

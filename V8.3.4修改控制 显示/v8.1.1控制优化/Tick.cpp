@@ -34,7 +34,7 @@ void Cpu_Tick_Initial(void)
 //------------------------------------------------------------------------------ 
 
 
-int Flag_Adc = 0; 
+int Flag_Temp = 0; 
 int Flag_Message = 0;
 int Flag_Display = 0;
 
@@ -56,7 +56,9 @@ __interrupt void TimerB0_Isr(void)         // ccr0中断服务
   
   
     CLK.Ttem++;                            // 32最大
-    
+    CLK.TempTimer ++ ;
+    if(CLK.TempTimer  %500 == 0) { Flag_Temp = 1 ;}
+     
     if(CLK.Ttem%CLK.Message_Load_Rate == 0)    {   Flag_Message = 1 ;       MessageCenter();   } //放中断里是因为 菜单里的功能有死循环
          
     if(CLK.Ttem%CLK.Display_Load_Rate == 0)    { Flag_Display = 1 ;  Display_Data_Calculate();  Alarm_Deal();  Display();  }
