@@ -695,14 +695,55 @@ void HartMessage (void)
 二者是同一数据帧当中的数据,当超过30ms仍然没接收到下一个字节时,便认为数据帧接收已经结束.*/
 #pragma vector = UART0RX_VECTOR
 __interrupt void UART0 (void)
-{       
-  receive[rec_ptr++] = RXBUF0; // rec_ptr初始值为0,每接受一个数据便自增1
-  if(receive[0]==0xff && receive[1]==0xff)  
-    CLK.received = 1;
-  else CLK.received = 0;
-  
-   CLK.Hart_Flag =1;
+{
+  unsigned char b = RXBUF0;
 
+  /* 每收到一字节刷新超时，真实帧传输中不会误触发释放 */
+  CLK.Hart_Flag = 1;
+  CLK.SecHT = 0;
+
+  /* 缓冲区溢出：丢弃并放行控制环，防止 rec_ptr 跑飞 */
+  if(rec_ptr >= 99)
+  {
+    rec_ptr = 0;
+    CLK.received = 0;
+    return;
+  }
+
+  /* 帧起始必须是前导 0xFF；非前导噪声不占用缓冲、不冻结控制 */
+  if(rec_ptr == 0 && b != 0xFF)
+  {
+    return;
+  }
+
+  receive[rec_ptr++] = b;
+
+  /* 已判定为有效前导后，后续数据帧字节保持 received=1，直到 OCD/超时结束 */
+  if(CLK.received == 1)
+  {
+    return;
+  }
+
+  /* 至少 5 个连续前导 0xFF 才置 received=1（HART 规范 5~20），
+     避免线上偶发 0xFF 0xFF 就把 RunControl / DAC 冻住 */
+  if(rec_ptr >= 5
+     && receive[0] == 0xFF && receive[1] == 0xFF
+     && receive[2] == 0xFF && receive[3] == 0xFF
+     && receive[4] == 0xFF)
+  {
+    CLK.received = 1;
+  }
+  else if(b != 0xFF)
+  {
+    /* 前导未满出现非 0xFF：失步重同步，不冻结控制环 */
+    rec_ptr = 0;
+    CLK.received = 0;
+  }
+  else
+  {
+    /* 前导收集中：不冻结控制环 */
+    CLK.received = 0;
+  }
 }
 /*
 #pragma vector = UART0TX_VECTOR

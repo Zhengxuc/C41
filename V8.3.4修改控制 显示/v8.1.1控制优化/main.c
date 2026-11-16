@@ -284,6 +284,7 @@ void main( void )
 {
       
       
+      
       Device_initial();
       Sys_initial();
 
@@ -313,7 +314,9 @@ void main( void )
          
 
          
-          if(CLK.received ==0)
+          /* received==1 仅表示可能在收 HART，不冻结采样/DAC；
+             仅 received==2（解析/应答）时短暂让出控制环 */
+          if(CLK.received != 2)
           {
 #if  WRITE_FACTORY 
             ;

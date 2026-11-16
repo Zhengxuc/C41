@@ -88,8 +88,16 @@ __interrupt void TimerB0_Isr(void)         // ccr0中断服务
     if(CLK.Hart_Flag == 1)
     {    
       CLK.SecHT++;
-      //if(CLK.SecHT>15)    //延时300ms
-      if((OCDIN&0x01) ==0)   //如果OCD被拉低,
+      /* 无新字节约 300ms 仍未完成：强制释放，避免干扰把 received 卡在 1 导致 RunControl 永久停 */
+      if(CLK.SecHT > 15)
+      {
+        CLK.Hart_Flag = 0;
+        CLK.received = 0;
+        CLK.SecHT = 0;
+        rec_ptr = 0;
+        memset(receive, 0, 100);
+      }
+      else if((OCDIN&0x01) ==0)   //如果OCD被拉低,
       {
         if(CLK.received==1){
         HartMessage();
@@ -101,6 +109,13 @@ __interrupt void TimerB0_Isr(void)         // ccr0中断服务
           memset(receive,0,100);
         }
       }
+    }
+    else if(CLK.received == 1)
+    {
+      /* 异常：received=1 但 Hart_Flag 已清，直接放行控制环 */
+      CLK.received = 0;
+      rec_ptr = 0;
+      memset(receive, 0, 100);
     }
     
     
